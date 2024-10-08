@@ -7,84 +7,131 @@
 <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
 
 <style>
-body {
-  background-color: black;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background-color: rgba(22, 22, 23, .81);
-  padding: .5% 5%;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-logo {
-  margin-right: 1.25%;
-}
-
-.navbar-logo img {
-  vertical-align: middle;
-  transition: transform 0.2s;
-}
-
-.navbar-logo img:hover {
-  transform: scale(1.2);
-}
-
-.navbar a {
-  color: white;
-  text-align: center;
-  padding: 1% 2.5%;
-  text-decoration: none;
-}
-
-.navbar a:hover {
-  color: white;
-  transform: scale(1.2);
-}
-
-.navbar a.active {
-  text-decoration: underline;
-}
-
-.content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
-  font-size: 3em;
-}
-
-.content h1 {
-  font-size: 190%;
-  margin-bottom: 0;
-}
-
-@media only screen and (min-width: 600px) {
-  .content h1 {
-    margin-left: -30%;
+  /* Default Dark Mode */
+  body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
   }
-}
 
-@media screen and (max-width: 100%) {
+  /* Light Mode Styles */
+  body.light-mode {
+    background-color: white;
+    color: black;
+  }
+
   .navbar {
-    flex-direction: column;
-    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(22, 22, 23, .81);
+    padding: 0.5% 5%;
+    display: flex;
+    align-items: center;
+  }
+
+
+    /* Light mode styles for navbar */
+    body.light-mode .navbar {
+    background-color: rgb(83, 39, 126); /* Light mode color (purple) */
+  }
+
+  .navbar-logo {
+    margin-right: 1.25%;
+  }
+
+  .navbar-logo img {
+    vertical-align: middle;
+    transition: transform 0.2s;
+  }
+
+  .navbar-logo img:hover {
+    transform: scale(1.2);
+  }
+
+  /* Navbar link container */
+  .navbar-links {
+    display: flex;
+    flex-grow: 1;
   }
 
   .navbar a {
-    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 1% 2.5%;
+    text-decoration: none;
+    transition: transform 0.2s;
   }
-}
+
+  .navbar a:hover {
+    color: white;
+    transform: scale(1.2);
+  }
+
+  .navbar a.active {
+    text-decoration: underline;
+  }
+
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-size: 3em;
+  }
+
+  .content h1 {
+    font-size: 190%;
+    margin-bottom: 0;
+  }
+
+  /* Light mode content styles */
+  body.light-mode .content h1 {
+    color: black;
+  }
+
+  /* Light/Dark mode toggle button */
+  .theme-toggle {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+  }
+
+  .theme-toggle:hover {
+    background-color: #666;
+  }
+
+  /* Light mode toggle button */
+  body.light-mode .theme-toggle {
+    background-color: #ddd;
+    color: black;
+  }
+
+  body.light-mode .theme-toggle:hover {
+    background-color: #bbb;
+  }
+
+  /* Media query for mobile view */
+  @media screen and (max-width: 100%) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .navbar a {
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
@@ -95,15 +142,46 @@ body {
       <img src="logo/logo.svg" alt="Logo" width="40" height="40">
     </a>
   </div>
-  <a href="about.html">About</a>
-  <a href="projects.html">Project</a>
-  <a href="contact.html" class="active">Contact</a>
-  
+
+  <!-- Flex container for the links -->
+  <div class="navbar-links">
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+
+  <!-- Light/Dark mode toggle button in the navbar -->
+  <button class="theme-toggle" id="themeToggle">Switch to Light Mode</button>
 </div>
 
 <div class="content">
   <h1>Contact</h1>
 </div>
+
+<script>
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Load theme preference from localStorage
+  if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-mode');
+    themeToggleBtn.textContent = 'Switch to Dark Mode';
+  }
+
+  // Event listener for theme toggle
+  themeToggleBtn.addEventListener('click', function () {
+    body.classList.toggle('light-mode');
+
+    // Change button text based on current mode
+    if (body.classList.contains('light-mode')) {
+      themeToggleBtn.textContent = 'Switch to Dark Mode';
+      localStorage.setItem('theme', 'light'); // Save preference
+    } else {
+      themeToggleBtn.textContent = 'Switch to Light Mode';
+      localStorage.setItem('theme', 'dark'); // Save preference
+    }
+  });
+</script>
 
 </body>
 </html>
