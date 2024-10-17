@@ -168,17 +168,17 @@
     themeToggleBtn.textContent = 'Switch to Dark Mode';
   }
 
-  // Event listener for theme toggle
+
   themeToggleBtn.addEventListener('click', function () {
     body.classList.toggle('light-mode');
 
-    // Change button text based on current mode
+
     if (body.classList.contains('light-mode')) {
       themeToggleBtn.textContent = 'Switch to Dark Mode';
-      localStorage.setItem('theme', 'light'); // Save preference
+      localStorage.setItem('theme', 'light'); 
     } else {
       themeToggleBtn.textContent = 'Switch to Light Mode';
-      localStorage.setItem('theme', 'dark'); // Save preference
+      localStorage.setItem('theme', 'dark'); 
     }
   });
 </script>
