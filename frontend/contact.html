@@ -151,7 +151,7 @@
   </div>
 
   <!-- Light/Dark mode toggle button in the navbar -->
-  <button class="theme-toggle" id="themeToggle">Switch to Light Mode</button>
+  <button class="theme-toggle" id="themeToggle">Light Mode</button>
 </div>
 
 <div class="content">
@@ -165,7 +165,7 @@
   // Load theme preference from localStorage
   if (localStorage.getItem('theme') === 'light') {
     body.classList.add('light-mode');
-    themeToggleBtn.textContent = 'Switch to Dark Mode';
+    themeToggleBtn.textContent = 'Dark Mode';
   }
 
   // Event listener for theme toggle
@@ -174,10 +174,10 @@
 
     // Change button text based on current mode
     if (body.classList.contains('light-mode')) {
-      themeToggleBtn.textContent = 'Switch to Dark Mode';
+      themeToggleBtn.textContent = 'Dark Mode';
       localStorage.setItem('theme', 'light'); // Save preference
     } else {
-      themeToggleBtn.textContent = 'Switch to Light Mode';
+      themeToggleBtn.textContent = 'Light Mode';
       localStorage.setItem('theme', 'dark'); // Save preference
     }
   });
