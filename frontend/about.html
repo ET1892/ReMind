@@ -95,28 +95,13 @@
     color: black;
   }
 
+  /* Remove any default button styling for the theme toggle */
   .theme-toggle {
-    background-color: #444;
-    color: white;
+    background: none;
     border: none;
-    padding: 8px 8px;
+    font-size: 1.5em; /* Adjust size of emoji */
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.2s;
-  }
-
-  .theme-toggle:hover {
-    background-color: #666;
-  }
-
-  /* Light mode toggle button */
-  body.light-mode .theme-toggle {
-    background-color: #ddd;
-    color: black;
-  }
-
-  body.light-mode .theme-toggle:hover {
-    background-color: #bbb;
+    padding: 0;
   }
 
   @media screen and (max-width: 100%) {
@@ -149,7 +134,7 @@
   </div>
 
   <!-- Light/Dark mode toggle button in the navbar -->
-  <button class="theme-toggle" id="themeToggle">Light Mode</button>
+  <button class="theme-toggle" id="themeToggle">🌞</button>
 </div>
 
 <div class="content">
@@ -162,20 +147,20 @@
 
   // Load theme preference from localStorage or default to light mode if no preference is set
   if (localStorage.getItem('theme') === 'dark') {
-    themeToggleBtn.textContent = 'Light Mode';
+    themeToggleBtn.textContent = '🌞'; // Sun icon for light mode option
   } else {
     body.classList.add('light-mode');
-    themeToggleBtn.textContent = 'Dark Mode';
+    themeToggleBtn.textContent = '🌜'; // Moon icon for dark mode option
   }
 
   themeToggleBtn.addEventListener('click', function () {
     body.classList.toggle('light-mode');
 
     if (body.classList.contains('light-mode')) {
-      themeToggleBtn.textContent = 'Dark Mode';
+      themeToggleBtn.textContent = '🌜'; // Moon icon for dark mode option
       localStorage.setItem('theme', 'light'); 
     } else {
-      themeToggleBtn.textContent = 'Light Mode';
+      themeToggleBtn.textContent = '🌞'; // Sun icon for light mode option
       localStorage.setItem('theme', 'dark'); 
     }
   });
