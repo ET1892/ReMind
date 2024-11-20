@@ -24,7 +24,9 @@
   </div>
 
   <!-- Light/Dark mode toggle button in the navbar -->
-  <button class="theme-toggle" id="themeToggle">🌞</button>
+  <button class="theme-toggle" id="themeToggle">
+    <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
+  </button>
 </div>
 
 <div class="content">
@@ -33,24 +35,25 @@
 
 <script>
   const themeToggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
   const body = document.body;
 
   // Load theme preference from localStorage or default to light mode if no preference is set
   if (localStorage.getItem('theme') === 'dark') {
-    themeToggleBtn.textContent = '🌞'; // Sun icon for light mode option
+    themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
   } else {
     body.classList.add('light-mode');
-    themeToggleBtn.textContent = '🌜'; // Moon icon for dark mode option
+    themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
   }
 
   themeToggleBtn.addEventListener('click', function () {
     body.classList.toggle('light-mode');
 
     if (body.classList.contains('light-mode')) {
-      themeToggleBtn.textContent = '🌜'; // Moon icon for dark mode option
+      themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
       localStorage.setItem('theme', 'light'); 
     } else {
-      themeToggleBtn.textContent = '🌞'; // Sun icon for light mode option
+      themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
       localStorage.setItem('theme', 'dark'); 
     }
   });
