@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minesweeper</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #DDDDDD;
+    text-align: center;
+  }
+
+  #game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 16px;
+  }
+
+  #grid {
+    border-collapse: collapse;
+    margin: 0;
+  }
+
+  #grid tr td {
+    border: 2px solid rgb(64, 63, 63);
+    background: #999999;
+    width: 40px; /* Larger cell size */
+    height: 40px; /* Ensure cells remain square */
+    text-align: center;
+    font-size: 16px; /* Larger font size */
+  }
+
+  #grid tr td.clicked {
+    background: #333333;
+  }
+
+  #grid tr td.mine {
+    background: #FF0000;
+  }
+
+  button {
+    margin-top: 12px;
+    padding: 12px 24px; /* Larger button padding */
+    font-size: 1.2rem; /* Larger font size */
+    cursor: pointer;
+    background-color: #444444;
+    color: #DDDDDD;
+    border: none;
+    border-radius: 4px;
+  }
+
+  button:hover {
+    background-color: #555555;
+  }
+
+  @media (max-width: 768px) {
+    #grid tr td {
+      width: 30px; /* Adjust cell size for medium screens */
+      height: 30px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 300px) {
+    #grid tr td {
+      width: 25px; /* Smaller cell size for small screens */
+      height: 25px;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="game-container">
+  <table id="grid"></table>
+  <button onclick="generateGrid();">Reset Grid</button>
+</div>
+
+<script>
+  var grid = document.getElementById("grid");
+  var testMode = false; // Turn this variable to true to see where the mines are
+  generateGrid();
+
+  function generateGrid() {
+    grid.innerHTML = "";
+    for (var i = 0; i < 10; i++) {
+      var row = grid.insertRow(i);
+      for (var j = 0; j < 10; j++) {
+        var cell = row.insertCell(j);
+        cell.onclick = function () { clickCell(this); };
+        var mine = document.createAttribute("data-mine");
+        mine.value = "false";
+        cell.setAttributeNode(mine);
+      }
+    }
+    addMines();
+  }
+
+  function addMines() {
+    for (var i = 0; i < 20; i++) {
+      var row = Math.floor(Math.random() * 10);
+      var col = Math.floor(Math.random() * 10);
+      var cell = grid.rows[row].cells[col];
+      cell.setAttribute("data-mine", "true");
+      if (testMode) cell.innerHTML = "X";
+    }
+  }
+
+  function revealMines() {
+    for (var i = 0; i < 10; i++) {
+      for (var j = 0; j < 10; j++) {
+        var cell = grid.rows[i].cells[j];
+        if (cell.getAttribute("data-mine") == "true") cell.className = "mine";
+      }
+    }
+  }
+
+  function checkLevelCompletion() {
+    var levelComplete = true;
+    for (var i = 0; i < 10; i++) {
+      for (var j = 0; j < 10; j++) {
+        if ((grid.rows[i].cells[j].getAttribute("data-mine") == "false") && (grid.rows[i].cells[j].innerHTML == "")) levelComplete = false;
+      }
+    }
+    if (levelComplete) {
+      alert("You Win!");
+      revealMines();
+    }
+  }
+
+  function clickCell(cell) {
+    if (cell.getAttribute("data-mine") == "true") {
+      revealMines();
+      alert("Game Over");
+    } else {
+      cell.className = "clicked";
+      var mineCount = 0;
+      var cellRow = cell.parentNode.rowIndex;
+      var cellCol = cell.cellIndex;
+      for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) {
+        for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) {
+          if (grid.rows[i].cells[j].getAttribute("data-mine") == "true") mineCount++;
+        }
+      }
+      cell.innerHTML = mineCount;
+      if (mineCount == 0) {
+        for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) {
+          for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) {
+            if (grid.rows[i].cells[j].innerHTML == "") clickCell(grid.rows[i].cells[j]);
+          }
+        }
+      }
+      checkLevelCompletion();
+    }
+  }
+</script>
+
+</body>
+</html>
