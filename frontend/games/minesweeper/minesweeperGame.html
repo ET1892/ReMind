@@ -8,10 +8,10 @@
   body {
     margin: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
-    color: #DDDDDD;
+    color: #9c9999;
     text-align: center;
   }
 
@@ -21,10 +21,15 @@
     align-items: center;
   }
 
-  h1 {
-    font-size: 16px;
-    font-weight: normal;
+  #stats {
+    display: flex;
+    justify-content: center;
     margin-bottom: 16px;
+    font-size: 20px; /* Increased overall font size */
+  }
+
+  #timer {
+    font-weight: bold; /* Made the timer text bold */
   }
 
   #grid {
@@ -35,10 +40,10 @@
   #grid tr td {
     border: 2px solid rgb(64, 63, 63);
     background: #999999;
-    width: 40px; /* Larger cell size */
-    height: 40px; /* Ensure cells remain square */
+    width: 40px;
+    height: 40px;
     text-align: center;
-    font-size: 16px; /* Larger font size */
+    font-size: 16px;
   }
 
   #grid tr td.clicked {
@@ -51,8 +56,8 @@
 
   button {
     margin-top: 12px;
-    padding: 12px 24px; /* Larger button padding */
-    font-size: 1.2rem; /* Larger font size */
+    padding: 12px 24px;
+    font-size: 1.2rem;
     cursor: pointer;
     background-color: #444444;
     color: #DDDDDD;
@@ -66,7 +71,7 @@
 
   @media (max-width: 768px) {
     #grid tr td {
-      width: 30px; /* Adjust cell size for medium screens */
+      width: 30px;
       height: 30px;
     }
 
@@ -78,7 +83,7 @@
 
   @media (max-width: 300px) {
     #grid tr td {
-      width: 25px; /* Smaller cell size for small screens */
+      width: 25px;
       height: 25px;
     }
 
@@ -92,22 +97,30 @@
 <body>
 
 <div id="game-container">
+  <div id="stats">
+    <div>Time: <span id="timer">0</span>s</div>
+  </div>
   <table id="grid"></table>
   <button onclick="generateGrid();">Reset Grid</button>
 </div>
 
 <script>
   var grid = document.getElementById("grid");
-  var testMode = false; // Turn this variable to true to see where the mines are
-  generateGrid();
+  var timerElement = document.getElementById("timer");
+  var timerStarted = false;
+  var startTime, timerInterval;
+  var testMode = false;
 
   function generateGrid() {
     grid.innerHTML = "";
+    clearInterval(timerInterval);
+    timerElement.textContent = "0";
+    timerStarted = false;
     for (var i = 0; i < 10; i++) {
       var row = grid.insertRow(i);
       for (var j = 0; j < 10; j++) {
         var cell = row.insertCell(j);
-        cell.onclick = function () { clickCell(this); };
+        cell.onclick = function () { handleFirstClick(this); };
         var mine = document.createAttribute("data-mine");
         mine.value = "false";
         cell.setAttributeNode(mine);
@@ -143,14 +156,25 @@
       }
     }
     if (levelComplete) {
-      alert("You Win!");
+      clearInterval(timerInterval);
+      alert("You Win in " + timerElement.textContent + " seconds!");
       revealMines();
     }
+  }
+
+  function handleFirstClick(cell) {
+    if (!timerStarted) {
+      timerStarted = true;
+      startTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+    clickCell(cell);
   }
 
   function clickCell(cell) {
     if (cell.getAttribute("data-mine") == "true") {
       revealMines();
+      clearInterval(timerInterval);
       alert("Game Over");
     } else {
       cell.className = "clicked";
@@ -173,6 +197,13 @@
       checkLevelCompletion();
     }
   }
+
+  function updateTimer() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    timerElement.textContent = elapsed;
+  }
+
+  generateGrid();
 </script>
 
 </body>
