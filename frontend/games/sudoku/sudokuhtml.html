@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Game</title>
+    <link rel="stylesheet" href="sudokucss.css">
+</head>
+<body>
+    <div class="container"></div>
+    
+    <div id="controls">
+        <button type="button" class="btn primary" data-action="newGame">New Game</button>
+        <button type="button" class="btn primary" data-action="validate">Validate</button>
+        <button type="button" class="btn primary" data-action="solve">Solve</button>
+    </div>
+    <script src="sudokujs.js"></script>
+    <script>
+        // Initialize the Sudoku game
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.querySelector('.container');
+            
+            // Game configuration
+            const gameConfig = {
+                validate_on_insert: true,
+                difficulty: 'normal',
+            };
+
+            // Create a new Sudoku game instance
+            const sudokuGame = new Game(gameConfig);
+
+            // Build and append the Sudoku grid
+            container.appendChild(sudokuGame.buildGUI());
+
+            // Attach button actions
+            document.querySelector('[data-action="newGame"]').addEventListener('click', () => sudokuGame.resetGame());
+            document.querySelector('[data-action="solve"]').addEventListener('click', () => sudokuGame.solveGame(0, 0));
+            document.querySelector('[data-action="validate"]').addEventListener('click', () => {
+                const isValid = sudokuGame.validateMatrix();
+                alert(isValid ? 'Sudoku is valid!' : 'Sudoku has errors.');
+            });
+        });
+    </script>
+</body>
+</html>
