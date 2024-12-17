@@ -54,8 +54,11 @@ const start = () => {
     contentBox.style.display = "block";
     startArea.style.display = "none";
     questionCount = 0; // Reset question count for a new game
+    score = 0; // Reset score for a new game
+    scoreArea.innerHTML = score; // Update the displayed score
     initGame();
 };
+
 
 const endGame = () => {
     clearInterval(timer);
@@ -67,10 +70,11 @@ const endGame = () => {
     modalText.innerHTML = `
     <center><br>Time's Up! <b>${correctWord.toUpperCase()}</b> was the correct word.
     <br>You Lost</center><br>
-    </center>
     `;
     usedWords = []; // Reset used words for a new game
+    score = 0; // Reset score for a new game
 };
+
 
 const winGame = () => {
     clearInterval(timer);
