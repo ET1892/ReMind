@@ -1,0 +1,108 @@
+<head>
+    <script src='tetris.js'></script>
+    <script>
+      window.addEventListener('load', event => {
+        const canvas = document.getElementById('tetris-canvas');
+        const tetris = new ClassicTetris(canvas);
+        document.getElementById('start-stop-btn').addEventListener('click', event => {
+          const startLevel = document.getElementById('level-input').value;
+          tetris.setStartLevel(startLevel);
+          tetris.togglePlayPause();
+        });
+        document.getElementById('quit-btn').addEventListener('click', event => {
+          tetris.quit();
+        });
+      });
+    </script>
+  
+    <style>
+      /* General page styling */
+      body {
+        user-select: none;
+        color: #fff;
+        font: 17px Georgia, serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+  
+      /* Container styling */
+      .container {
+        display: table;
+        width: 100%;
+        height: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+        background-color: #000000;
+        border-radius: 10px;
+        
+      }
+  
+      .canvas {
+        width: 100%;
+        max-width: 520px; /* Maintain the canvas aspect ratio */
+        height: auto;
+        border: 3px solid #fff;
+        border-radius: 8px;
+      }
+  
+      /* Button styling */
+      .btn.primary {
+        margin-top: 8px;
+        padding: 8px 18px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: #444444;
+        color: #DDDDDD;
+        transition: all 0.5s ease;
+        border: none;
+        border-radius: 8px;
+      }
+  
+      .btn.primary:hover {
+        background-color: #555555;
+      }
+  
+      label {
+        display: inline-block;
+        font-size: 1.4rem;
+        font-family: 'Georgia', serif;
+        color: #DDDDDD;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+  
+      /* Input field styling */
+      input[type="number"] {
+        padding: 5px;
+        margin-right: 3%;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        color: #000000;
+      }
+  
+      /* Button container styling */
+      .button-container {
+        padding: 15px 30px;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="container">
+      <canvas id="tetris-canvas" class="canvas" width="520" height="600"></canvas>
+      <div class="button-container">
+        <label for="level-input">Start Level:</label>
+        <input id="level-input" name="level-input" type="number" min="0" max="19" value="5">
+        <button id="start-stop-btn" class="btn primary">Play/Pause</button>
+        <button id="quit-btn" class="btn primary">Quit</button>
+      </div>
+    </div>
+  </body>
+  
