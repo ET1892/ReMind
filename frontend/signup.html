@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signup</title>
     <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
     <link rel="stylesheet" href="universal.css">
     <style>
@@ -21,16 +21,16 @@
             border-radius: 8px;
             width: 300px;
             border: 3px solid #000000;
-            text-align: center; /* Align the content to the center */
+            text-align: center;
         }
 
         .login-form img {
-            width: 60%; /* Adjust the width of the logo */
+            width: 60%;
         }
 
         .login-form h2 {
             text-align: center;
-            margin-bottom: -70px;
+            margin-bottom: -10px;
         }
 
         .login-form input {
@@ -43,8 +43,8 @@
         }
 
         .login-form button {
-            width: 80%;
-            padding: 8px;
+            width: 100%;
+            padding: 10px;
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -56,24 +56,6 @@
 
         .login-form button:hover {
             background-color: #0056b3;
-        }
-
-        .login-form .forgot-password,
-        .signup-link {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .login-form .forgot-password a,
-        .signup-link a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .login-form .forgot-password a:hover,
-        .signup-link a:hover {
-            text-decoration: underline;
         }
 
         .message {
@@ -100,20 +82,17 @@
     </a>
   </div>
 
-  <!-- Flex container for the links -->
   <div class="navbar-links">
     <a href="learn.html">Learn</a>
     <a href="games.html">Games</a>
     <a href="facts.html">Facts</a>
   </div>
 
-  <!-- Light/Dark mode toggle button in the navbar -->
   <button class="theme-toggle" id="themeToggle">
     <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
   </button>
 
-  <!-- Login Icon placed on the rightmost side -->
-  <a href="login.html" class="login-icon">
+  <a href="signup.html" class="login-icon">
     <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
   </a>
 </div>
@@ -121,25 +100,14 @@
 <div class="content">
   <div class="login-container">
     <div class="login-form">
-      <!-- Logo in the center -->
       <img src="logo/logoBlack.svg" alt="Logo" />
       
-      <h2>Sign In</h2>
-      <form id="loginForm">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-
-        <div class="forgot-password">
-          <a href="forgot-password.html">Forgot Password?</a>
-        </div>
-
-        <div class="signup-link">
-          <p><a href="signup.html">Don't have an account? Sign Up</a></p>
-        </div>
+        <button type="submit">Sign Up</button>
       </form>
-      
-      <!-- Success and error messages will appear here -->
       <div id="messageContainer"></div>
     </div>
   </div>
@@ -150,33 +118,30 @@
   const themeIcon = document.getElementById('themeIcon');
   const body = document.body;
 
-  // Load theme preference from localStorage or default to light mode if no preference is set
   if (localStorage.getItem('theme') === 'dark') {
-    themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+    themeIcon.src = 'logo/sun-icon.svg';
   } else {
     body.classList.add('light-mode');
-    themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+    themeIcon.src = 'logo/moon-icon.svg';
   }
 
   themeToggleBtn.addEventListener('click', function () {
     body.classList.toggle('light-mode');
 
     if (body.classList.contains('light-mode')) {
-      themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+      themeIcon.src = 'logo/moon-icon.svg';
       localStorage.setItem('theme', 'light'); 
     } else {
-      themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+      themeIcon.src = 'logo/sun-icon.svg';
       localStorage.setItem('theme', 'dark'); 
     }
   });
 </script>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-  
-  // Your web app's Firebase configuration
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
     authDomain: "remind-75124.firebaseapp.com",
@@ -186,66 +151,43 @@
     appId: "1:358342790086:web:7d64b01f8f74d86c21c0c7"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
 
-  // Handle login form submission
-  document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const messageContainer = document.getElementById('messageContainer');
     
-    // Reset the message container
     messageContainer.innerHTML = "";
 
-    // Simple email regex to check for valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    // Email validation
+
     if (!emailRegex.test(email)) {
       messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
-      return; // Exit the function early if the email is invalid
+      return;
     }
 
-    // Password validation (ensure password length is at least 6 characters)
     if (password.length < 6) {
       messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
-      return; // Exit the function early if the password is too short
+      return;
     }
 
-    // Sign in the user using Firebase Authentication
-    signInWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // User successfully signed in
         const user = userCredential.user;
-        console.log("User signed in: ", user);
-
-        // Display success message
-        messageContainer.innerHTML = '<div class="message">Sign in successful</div>';
+        console.log("User signed up: ", user);
+        messageContainer.innerHTML = '<div class="message">Sign up successful</div>';
+        // Redirect (optional)
+        // window.location.href = "home.html";  
       })
       .catch((error) => {
-    const errorCode = error.code;
-    console.error("Error signing in: ", errorCode);
-
-    let errorMessage = "Invalid email or password."; // Default message
-
-    if (errorCode === "auth/user-not-found") {
-        errorMessage = "No account found with this email. <a href='signup.html'>Sign up</a>.";
-    } else if (errorCode === "auth/wrong-password") {
-        errorMessage = "Incorrect email or password.";
-    } else if (errorCode === "auth/invalid-email") {
-        errorMessage = "Please enter a valid email address.";
-    } else if (errorCode === "auth/too-many-requests") {
-        errorMessage = "Too many failed login attempts. Please try again later.";
-    }
-
-    // Display the specific error message
-    messageContainer.innerHTML = `<div class="error">${errorMessage}</div>`;
-});
-
+        const errorMessage = error.message;
+        console.error("Error signing up: ", errorMessage);
+        messageContainer.innerHTML = '<div class="error">Failed to sign up: ' + errorMessage + '</div>';
+      });
   });
 </script>
 
