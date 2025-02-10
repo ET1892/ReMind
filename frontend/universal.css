@@ -20,7 +20,7 @@ body.light-mode {
   right: 0;
   z-index: 1000;
   background-color: rgba(22, 22, 23, .81);
-  padding: 0.5% 5%;
+  padding: 8px 5%;
   display: flex;
   align-items: center;
   justify-content: space-between; /* Ensure space between items */

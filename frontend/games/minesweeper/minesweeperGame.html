@@ -25,11 +25,11 @@
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
-    font-size: 20px; /* Increased overall font size */
+    font-size: 30px; /* Increased overall font size */
   }
 
   #timer {
-    font-weight: bold; /* Made the timer text bold */
+    font-weight: bold;  
   }
 
   #grid {
@@ -39,15 +39,16 @@
 
   #grid tr td {
     border: 2px solid rgb(64, 63, 63);
-    background: #999999;
+    background: #dfdfdf;
     width: 40px;
     height: 40px;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.836);
   }
 
   #grid tr td.clicked {
-    background: #333333;
+    background: #737373;
   }
 
   #grid tr td.mine {
@@ -59,14 +60,16 @@
     padding: 12px 24px;
     font-size: 1.2rem;
     cursor: pointer;
-    background-color: #444444;
-    color: #DDDDDD;
+    background-color: #6d6c6c;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
+    
   }
 
   button:hover {
     background-color: #555555;
+    transition: all 0.5s ease;
   }
 
   @media (max-width: 768px) 
@@ -78,7 +81,7 @@
 
     button {
       padding: 8px 16px;
-      font-size: 1rem;
+      font-size: 1.1 rem;
     }
   }
 
@@ -91,7 +94,9 @@
 
     button {
       padding: 6px 12px;
-      font-size: 0.9rem;
+      font-size: 1 rem;
+
+
     }
   }
 </style>

@@ -16,9 +16,10 @@
   
   .container{
     width: 75%;
-    border-radius: 7px;
-    background: #888888;
+    border-radius: 8px;
+    background: #dfdfdf;
     position: relative;
+    outline: 2px solid black;
     
   }
   .container h2{
@@ -38,7 +39,7 @@
   .startBtn {
     border: none;
     outline: none;
-    color: #fff;
+    color: black;
     cursor: pointer;
     margin: 15px;
     padding: 10px 0;
@@ -46,12 +47,12 @@
     border-radius: 5px;
     width: 35%;
     transition: all 0.5s ease;
-    background: #444444;
+    background: #ffffffba;
   
   }
   
   .startBtn:hover{
-    background: #555555;
+    background: #2cbd10;
   }
   
   
@@ -117,19 +118,23 @@
     transform: scale(0.97);
   }
   .buttons .refresh-word{
-    background: #444444;
+    background: #ffffffba;
+    color: black;
   }
   .buttons .refresh-word:hover{
-    background: #555555;
+    background: #bcbcbc;
+    color: black;
   }
   
   
   
   .buttons .check-word{
-    background: #444444;
+    background: #ffffffba;
+    color: black;
   }
   .buttons .check-word:hover{
-    background: #555555;
+    background: #bcbcbc;
+    color: black;
   }
   
   

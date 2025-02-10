@@ -59,7 +59,7 @@ tr:nth-child(6) input {
 	font-size: 20px;
 	padding: 0;
 	border: 3px #555555 solid; /* Changed from brown to medium gray */
-	background-color: #333333; /* Changed from brown to dark gray */
+	background-color: #acacac; /* Changed from brown to dark gray */
 	color: #eee;
 }
 
@@ -104,7 +104,7 @@ tr:nth-child(6) input {
     padding: 8px 18px;
     font-size: 1.2rem;
     cursor: pointer;
-    background-color: #444444;
+    background-color: #808080;
     color: #DDDDDD;
     transition: all 0.5s ease;
     border: none;
@@ -113,5 +113,6 @@ tr:nth-child(6) input {
   
   .btn.primary:hover {
     background-color: #555555;
+	
   }
   

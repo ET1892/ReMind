@@ -15,33 +15,31 @@ var modalText = document.getElementById("modalText");
 
 let correctWord, timer;
 let score = 0;
-let questionCount = 0; // Track the number of questions
-let usedWords = []; // To keep track of used words
+let questionCount = 0;
+let usedWords = [];
 
 const initTimer = (maxTime) => {
     clearInterval(timer);
     timer = setInterval(() => {
         if (maxTime > 0) {
             maxTime--;
-            return timeText.innerText = maxTime;
+            timeText.innerText = maxTime;
+        } else {
+            modal.style.display = "block";
+            modalContent.classList.add("modal-wrong");
+            modalText.innerHTML = `<br>Time's Up! <b>${correctWord.toUpperCase()}</b> was the correct word`;
+
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 3000);  
+
+            endGame();
         }
-        modal.style.display = "block";
-        modalContent.classList.add("modal-wrong");
-        modalText.innerHTML = `<br>Time's Up! <b>${correctWord.toUpperCase()}</b> was the correct word`;
-
-        // Add a delay of 3 seconds before hiding the modal
-        setTimeout(() => {
-            modal.style.display = "none"; // Hide the modal after 3 seconds
-        }, 3000);  // Delay of 3 seconds
-
-        endGame();
     }, 1000);
 };
 
-
 inputField.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-        // Check if modal is open, then close it
         if (modal.style.display === "block") {
             modal.style.display = "none";
         } else {
@@ -53,12 +51,11 @@ inputField.addEventListener("keypress", (e) => {
 const start = () => {
     contentBox.style.display = "block";
     startArea.style.display = "none";
-    questionCount = 0; // Reset question count for a new game
-    score = 0; // Reset score for a new game
-    scoreArea.innerHTML = score; // Update the displayed score
+    questionCount = 0;
+    score = 0;
+    scoreArea.innerHTML = score;
     initGame();
 };
-
 
 const endGame = () => {
     clearInterval(timer);
@@ -71,10 +68,9 @@ const endGame = () => {
     <center><br>Time's Up! <b>${correctWord.toUpperCase()}</b> was the correct word.
     <br>You Lost</center><br>
     `;
-    usedWords = []; // Reset used words for a new game
-    score = 0; // Reset score for a new game
+    usedWords = [];
+    score = 0;
 };
-
 
 const winGame = () => {
     clearInterval(timer);
@@ -83,24 +79,23 @@ const winGame = () => {
     modal.style.display = "block";
     modalContent.classList.add("modal-correct");
     modalText.innerHTML = `<br><center>You Won!<br>Your Final Score: ${score} Points.<br>You answered all 10 questions!</center>`;
-    usedWords = []; // Reset used words for a new game
+    usedWords = [];
 };
 
-const initGame = () => {
-    if (questionCount === 10) { // End game after 10 questions
+const initGame = (remainingTime = 30) => {
+    if (questionCount === 10) { 
         winGame();
         return;
     }
 
-    initTimer(30);
-    questionCount++; // Increment question count
+    questionCount++;
 
     let randomObj;
     do {
         randomObj = words[Math.floor(Math.random() * words.length)];
-    } while (usedWords.includes(randomObj.word)); // Ensure word hasn't been used
+    } while (usedWords.includes(randomObj.word));
 
-    usedWords.push(randomObj.word); // Mark the word as used
+    usedWords.push(randomObj.word);
 
     let wordArray = randomObj.word.split("");
     for (let i = wordArray.length - 1; i > 0; i--) {
@@ -114,11 +109,13 @@ const initGame = () => {
     inputField.value = "";
     inputField.setAttribute("maxlength", correctWord.length);
     scoreArea.innerHTML = score;
+
+    initTimer(remainingTime);
 };
 
 const checkWord = () => {
     let userWord = inputField.value.toLowerCase();
-    let timeLeft = parseInt(timeText.innerText); // Get the remaining time from the timer
+    let timeLeft = parseInt(timeText.innerText);
 
     modalContent.classList.remove("modal-correct", "modal-wrong");
 
@@ -129,17 +126,16 @@ const checkWord = () => {
 
     if (userWord !== correctWord) {
         if (score >= 1) {
-            score = score - 1;
+            score -= 1;
             scoreArea.innerHTML = score;
         }
         modal.style.display = "block";
-        modalContent.classList.add("modal-wrong"); // Set the wrong class
+        modalContent.classList.add("modal-wrong");
         return modalText.innerHTML = `<br><b>${userWord}</b> is incorrect (-1 Point)`;
     } else {
         modal.style.display = "block";
-        modalContent.classList.add("modal-correct"); // Set the correct class
+        modalContent.classList.add("modal-correct");
 
-        // Award +2 if the word was guessed within 5 seconds, otherwise +1
         if (timeLeft >= 25) {
             score += 2;
             modalText.innerHTML = `<b>${correctWord.toUpperCase()}</b> is the correct word! You guessed it in less than 5 seconds! (+2 Points)`;
@@ -150,28 +146,20 @@ const checkWord = () => {
 
         scoreArea.innerHTML = score;
 
-        // Hide the modal after 2 seconds
         setTimeout(() => {
             modal.style.display = "none";
-        }, 1500);  // Delay of 2 seconds
+        }, 1500);
     }
 
-    initGame(); // Move to the next word
+    initGame(timeLeft);
 };
 
+refreshBtn.addEventListener("click", () => {
+    let timeLeft = parseInt(timeText.innerText);
+    initGame(timeLeft);
+});
 
-
-refreshBtn.addEventListener("click", initGame);
 checkBtn.addEventListener("click", checkWord);
-
-
-
-/* When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
-
-*/
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
