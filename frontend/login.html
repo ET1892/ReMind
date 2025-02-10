@@ -124,7 +124,6 @@
       <!-- Logo in the center -->
       <img src="logo/logoBlack.svg" alt="Logo" />
       
-      <h2>Sign In</h2>
       <form id="loginForm">
         <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password" required>
@@ -172,11 +171,9 @@
 </script>
 
 <script type="module">
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
   
-  // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
     authDomain: "remind-75124.firebaseapp.com",
@@ -186,68 +183,102 @@
     appId: "1:358342790086:web:7d64b01f8f74d86c21c0c7"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
+  
+  document.addEventListener("DOMContentLoaded", function () {
+      const userEmail = localStorage.getItem("userEmail");
+      const loginForm = document.getElementById("loginForm");
+      const messageContainer = document.getElementById("messageContainer");
 
-  // Handle login form submission
+      if (userEmail) {
+          loginForm.style.display = "none"; // Hide login form
+
+          // Show success message + Logout button
+          messageContainer.innerHTML = `
+              <div class="message">You are signed in as <strong>${userEmail}</strong></div>
+              <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+          `;
+
+          // Add Logout button functionality
+          document.getElementById("logoutButton").addEventListener("click", function () {
+              signOut(auth).then(() => {
+                  localStorage.removeItem("userEmail"); // Remove stored email
+                  location.reload(); // Reload page to show login form again
+              }).catch((error) => {
+                  console.error("Error signing out: ", error);
+              });
+          });
+      }
+  });
+
   document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+      event.preventDefault();
 
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const messageContainer = document.getElementById('messageContainer');
-    
-    // Reset the message container
-    messageContainer.innerHTML = "";
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const messageContainer = document.getElementById('messageContainer');
 
-    // Simple email regex to check for valid email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    // Email validation
-    if (!emailRegex.test(email)) {
-      messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
-      return; // Exit the function early if the email is invalid
-    }
+      messageContainer.innerHTML = "";
 
-    // Password validation (ensure password length is at least 6 characters)
-    if (password.length < 6) {
-      messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
-      return; // Exit the function early if the password is too short
-    }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailRegex.test(email)) {
+          messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
+          return;
+      }
 
-    // Sign in the user using Firebase Authentication
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // User successfully signed in
-        const user = userCredential.user;
-        console.log("User signed in: ", user);
+      if (password.length < 6) {
+          messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
+          return;
+      }
 
-        // Display success message
-        messageContainer.innerHTML = '<div class="message">Sign in successful</div>';
-      })
-      .catch((error) => {
-    const errorCode = error.code;
-    console.error("Error signing in: ", errorCode);
+      signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+              const user = userCredential.user;
+              console.log("User signed in: ", user);
 
-    let errorMessage = "Invalid email or password."; // Default message
+              localStorage.setItem("userEmail", email);
 
-    if (errorCode === "auth/user-not-found") {
-        errorMessage = "No account found with this email. <a href='signup.html'>Sign up</a>.";
-    } else if (errorCode === "auth/wrong-password") {
-        errorMessage = "Incorrect email or password.";
-    } else if (errorCode === "auth/invalid-email") {
-        errorMessage = "Please enter a valid email address.";
-    } else if (errorCode === "auth/too-many-requests") {
-        errorMessage = "Too many failed login attempts. Please try again later.";
-    }
+              // Hide login form
+              document.getElementById("loginForm").style.display = "none";
 
-    // Display the specific error message
-    messageContainer.innerHTML = `<div class="error">${errorMessage}</div>`;
-});
+              messageContainer.innerHTML = `
+                  <div class="message">You have signed in as <strong>${email}</strong></div>
+                  <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+              `;
 
+              // Add Logout button functionality
+              document.getElementById("logoutButton").addEventListener("click", function () {
+                  signOut(auth).then(() => {
+                      localStorage.removeItem("userEmail");
+                      location.reload();
+                  }).catch((error) => {
+                      console.error("Error signing out: ", error);
+                  });
+              });
+          })
+          .catch((error) => {
+              const errorCode = error.code;
+              console.error("Error signing in: ", errorCode);
+
+              let errorMessage = "Invalid email or password.";
+
+              if (errorCode === "auth/user-not-found") {
+                  errorMessage = "No account found with this email. <a href='signup.html'>Sign up</a>.";
+              } else if (errorCode === "auth/wrong-password") {
+                  errorMessage = "Incorrect email or password.";
+              } else if (errorCode === "auth/invalid-email") {
+                  errorMessage = "Please enter a valid email address.";
+              } else if (errorCode === "auth/too-many-requests") {
+                  errorMessage = "Too many failed login attempts. Please try again later.";
+              }
+
+              messageContainer.innerHTML = `<div class="error">${errorMessage}</div>`;
+          });
   });
 </script>
+
 
 </body>
 </html>
