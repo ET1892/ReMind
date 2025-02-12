@@ -138,57 +138,46 @@
   });
 </script>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
-    authDomain: "remind-75124.firebaseapp.com",
-    projectId: "remind-75124",
-    storageBucket: "remind-75124.firebasestorage.app",
-    messagingSenderId: "358342790086",
-    appId: "1:358342790086:web:7d64b01f8f74d86c21c0c7"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-
-  document.getElementById('signupForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const messageContainer = document.getElementById('messageContainer');
-    
-    messageContainer.innerHTML = "";
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(email)) {
-      messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
-      return;
-    }
-
-    if (password.length < 6) {
-      messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
-      return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("User signed up: ", user);
-        messageContainer.innerHTML = '<div class="message">Sign up successful</div>';
-        // Redirect (optional)
-        // window.location.href = "home.html";  
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        console.error("Error signing up: ", errorMessage);
-        messageContainer.innerHTML = '<div class="error">Failed to sign up: ' + errorMessage + '</div>';
-      });
+<script>
+  document.getElementById("signupForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
+  
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const messageContainer = document.getElementById("messageContainer");
+  
+      messageContainer.innerHTML = ""; // Clear messages
+  
+      if (!email || !password) {
+          messageContainer.innerHTML = '<div class="error">Email and password are required.</div>';
+          return;
+      }
+  
+      if (password.length < 6) {
+          messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
+          return;
+      }
+  
+      try {
+          const response = await fetch("http://localhost:3001/signup", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password })
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+              messageContainer.innerHTML = '<div class="message">Signup successful! Redirecting...</div>';
+              setTimeout(() => window.location.href = "login.html", 2000);
+          } else {
+              messageContainer.innerHTML = `<div class="error">${data.error}</div>`;
+          }
+      } catch (error) {
+          messageContainer.innerHTML = '<div class="error">Error signing up. Please try again.</div>';
+      }
   });
+  
 </script>
 
 </body>

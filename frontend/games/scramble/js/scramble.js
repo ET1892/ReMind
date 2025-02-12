@@ -82,7 +82,7 @@ const winGame = () => {
     usedWords = [];
 };
 
-const initGame = (remainingTime = 30) => {
+const initGame = (remainingTime = 45) => {
     if (questionCount === 10) { 
         winGame();
         return;

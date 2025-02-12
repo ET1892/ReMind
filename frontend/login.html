@@ -173,7 +173,8 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-  
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
     authDomain: "remind-75124.firebaseapp.com",
@@ -185,44 +186,81 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth();
-  
-  document.addEventListener("DOMContentLoaded", function () {
+  const db = getFirestore(app);
+
+  document.addEventListener("DOMContentLoaded", async function () {
       const userEmail = localStorage.getItem("userEmail");
       const loginForm = document.getElementById("loginForm");
       const messageContainer = document.getElementById("messageContainer");
 
       if (userEmail) {
-          loginForm.style.display = "none"; // Hide login form
+          loginForm.style.display = "none";
 
-          // Show success message + Logout button
           messageContainer.innerHTML = `
               <div class="message">You are signed in as <strong>${userEmail}</strong></div>
               <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+              <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
           `;
 
-          // Add Logout button functionality
           document.getElementById("logoutButton").addEventListener("click", function () {
               signOut(auth).then(() => {
-                  localStorage.removeItem("userEmail"); // Remove stored email
-                  location.reload(); // Reload page to show login form again
+                  localStorage.removeItem("userEmail");
+                  location.reload();
               }).catch((error) => {
                   console.error("Error signing out: ", error);
               });
           });
+
+          // Load user game data
+          loadUserGameData();
       }
   });
+
+  async function loadUserGameData() {
+      const user = auth.currentUser;
+      if (user) {
+          const userDocRef = doc(db, "users", user.uid);
+          try {
+              const userDoc = await getDoc(userDocRef);
+              if (userDoc.exists()) {
+                  const games = userDoc.data().games || {}; // Access `games` object
+                  displayGameData(games);
+              } else {
+                  displayGameData(null);
+              }
+          } catch (error) {
+              console.error("Error fetching game data:", error);
+              displayGameData(null);
+          }
+      }
+  }
+
+  function displayGameData(games) {
+      const gameDataContainer = document.getElementById("gameDataContainer");
+      if (!games || Object.keys(games).length === 0) {
+          gameDataContainer.innerHTML = "<p>No game data found. Start playing to track your high scores!</p>";
+          return;
+      }
+
+      let gameScoresHTML = "<h3>Your Highest Scores:</h3><ul>";
+      for (const game in games) {
+          gameScoresHTML += `<li><strong>${game}:</strong> ${games[game].highestScore || 0} points</li>`;
+      }
+      gameScoresHTML += "</ul>";
+
+      gameDataContainer.innerHTML = gameScoresHTML;
+  }
 
   document.getElementById('loginForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
       const messageContainer = document.getElementById('messageContainer');
 
       messageContainer.innerHTML = "";
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
       if (!emailRegex.test(email)) {
           messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
           return;
@@ -234,21 +272,23 @@
       }
 
       signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
+          .then(async (userCredential) => {
               const user = userCredential.user;
               console.log("User signed in: ", user);
 
               localStorage.setItem("userEmail", email);
 
-              // Hide login form
+              // Hide login form and show success message
               document.getElementById("loginForm").style.display = "none";
-
               messageContainer.innerHTML = `
                   <div class="message">You have signed in as <strong>${email}</strong></div>
                   <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+                  <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
               `;
 
-              // Add Logout button functionality
+              // Load game data after login
+              await loadUserGameData();
+
               document.getElementById("logoutButton").addEventListener("click", function () {
                   signOut(auth).then(() => {
                       localStorage.removeItem("userEmail");
@@ -257,6 +297,11 @@
                       console.error("Error signing out: ", error);
                   });
               });
+
+              
+
+              // Redirect to home page after successful login
+              setTimeout(() => window.location.href = "home.html", 20000);
           })
           .catch((error) => {
               const errorCode = error.code;
@@ -278,6 +323,7 @@
           });
   });
 </script>
+
 
 
 </body>
