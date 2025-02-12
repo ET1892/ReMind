@@ -78,7 +78,7 @@ const winGame = () => {
     startArea.style.display = "block";
     modal.style.display = "block";
     modalContent.classList.add("modal-correct");
-    modalText.innerHTML = `<br><center>You Won!<br>Your Final Score: ${score} Points.<br>You answered all 10 questions!</center>`;
+    modalText.innerHTML = `<br><center>You Won!<br>Your Final Score: ${score}  Points.<br>You answered all 10 questions!</center>`;
     usedWords = [];
 };
 
@@ -161,7 +161,7 @@ refreshBtn.addEventListener("click", () => {
 
 checkBtn.addEventListener("click", checkWord);
 
-// When the user clicks anywhere outside of the modal, close it
+// when user clicks outside modal it closes 
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";

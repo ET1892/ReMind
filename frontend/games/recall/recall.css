@@ -30,7 +30,7 @@ body {
 		background: #bcffcc;
    }
 	100% {
-		background: white;
+		background: rgb(183, 183, 183);
    }
 }
 
@@ -67,9 +67,13 @@ body {
 .card .inside.picked, .card .inside.matched {
 	transform: rotateY(180deg);
 }
+
+
 .card .inside.matched {
-	animation: 1s matchAnim ease-in-out;
-	animation-delay: 0.4s;
+	animation: 3s matchAnim ease-in-out forwards;
+
+
+
 }
 .card .front, .card .back {
 	backface-visibility: hidden;
