@@ -126,11 +126,25 @@ app.post("/update-score", async (req, res) => {
     let userData = userDoc.data();
     let gameData = userData.games[game] || { highestScore: 0, history: [] };
 
-    gameData.history.push(score);
+    // Format timestamp as "HH:mm DD-MM-YYYY"
+    const now = new Date();
+    const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + 
+                      " " + now.toLocaleDateString("en-GB");
+
+    // Add new score with timestamp
+    gameData.history.push({ score, timestamp });
+
+    // Keep only the last 50 scores
+    if (gameData.history.length > 50) {
+      gameData.history.shift(); // Removes the oldest entry
+    }
+
+    // Update highest score if needed
     if (score > gameData.highestScore) {
       gameData.highestScore = score;
     }
 
+    // Save updated game data back to Firestore
     await userRef.update({ [`games.${game}`]: gameData });
 
     res.json({ message: "Score updated", gameData });
@@ -138,6 +152,7 @@ app.post("/update-score", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 
 // ✅ Fetch User Data API
