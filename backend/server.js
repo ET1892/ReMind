@@ -6,15 +6,19 @@ const bodyParser = require("body-parser");
 
 dotenv.config(); // Load environment variables
 
-// Initialize Firebase Admin SDK
-const serviceAccount = require("./firebase-admin.json");
 
-/*
+// Initialize Firebase Admin SDK
+require("dotenv").config();
+const admin = require("firebase-admin");
+
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://your-project-id.firebaseio.com", // Replace with your actual Firebase URL, rights belong to Firebase
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  }),
 });
-*/
+
 
 const db = admin.firestore();
 const app = express();
