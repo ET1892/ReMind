@@ -170,6 +170,7 @@
   });
 </script>
 
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
@@ -189,32 +190,36 @@
   const db = getFirestore(app);
 
   document.addEventListener("DOMContentLoaded", async function () {
-      const userEmail = localStorage.getItem("userEmail");
-      const loginForm = document.getElementById("loginForm");
-      const messageContainer = document.getElementById("messageContainer");
+    const userEmail = localStorage.getItem("userEmail");
+    const uid = localStorage.getItem("uid"); // Get UID from localStorage
+    const loginForm = document.getElementById("loginForm");
+    const messageContainer = document.getElementById("messageContainer");
 
-      if (userEmail) {
-          loginForm.style.display = "none";
+    // Check if both userEmail and UID exist
+    if (userEmail && uid) {
+        loginForm.style.display = "none";
 
-          messageContainer.innerHTML = `
-              <div class="message">You are signed in as <strong>${userEmail}</strong></div>
-              <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
-              <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
-          `;
+        messageContainer.innerHTML = `
+            <div class="message">You are signed in as <strong>${userEmail}</strong></div>
+            <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+            <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
+        `;
 
-          document.getElementById("logoutButton").addEventListener("click", function () {
-              signOut(auth).then(() => {
-                  localStorage.removeItem("userEmail");
-                  location.reload();
-              }).catch((error) => {
-                  console.error("Error signing out: ", error);
-              });
-          });
+        document.getElementById("logoutButton").addEventListener("click", function () {
+            signOut(auth).then(() => {
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("uid"); // Remove UID from local storage
+                location.reload();
+            }).catch((error) => {
+                console.error("Error signing out: ", error);
+            });
+        });
 
-          // Load user game data
-          loadUserGameData();
-      }
-  });
+        // Load user game data
+        loadUserGameData();
+    }
+});
+
 
   async function loadUserGameData() {
       const user = auth.currentUser;
@@ -271,9 +276,14 @@
           return;
       }
 
+
+
+      //checks for UID and email before loading user data or showing the logout button, the storing of UID in local will be used for pushing the game scores
+
       signInWithEmailAndPassword(auth, email, password)
           .then(async (userCredential) => {
               const user = userCredential.user;
+              localStorage.setItem("uid", user.uid); // Store UID in localStorage
               console.log("User signed in: ", user);
 
               localStorage.setItem("userEmail", email);
@@ -292,6 +302,8 @@
               document.getElementById("logoutButton").addEventListener("click", function () {
                   signOut(auth).then(() => {
                       localStorage.removeItem("userEmail");
+                      localStorage.removeItem("uid"); // Remove UID from local storage
+
                       location.reload();
                   }).catch((error) => {
                       console.error("Error signing out: ", error);
@@ -301,7 +313,7 @@
               
 
               // Redirect to home page after successful login
-              setTimeout(() => window.location.href = "home.html", 20000);
+              setTimeout(() => window.location.href = "home.html", 10000);
           })
           .catch((error) => {
               const errorCode = error.code;

@@ -36,7 +36,7 @@
             var _ = Memory;
             var $card = $(this);
         
-            // Only increment the counter if the card is flipped (picked)
+            // Only increment the counter if the card is flipped 
             if (
                 !_.paused &&
                 !$card.find(".inside").hasClass("matched") &&
@@ -45,7 +45,7 @@
                 // Flip the card (add "picked" class)
                 $card.find(".inside").addClass("picked");
         
-                // Increment the click count only when the card is turned (i.e., flipped)
+                // Increment the click count only when the card is turned
                 _.clickCount++;
         
                 if (!_.guess) {
