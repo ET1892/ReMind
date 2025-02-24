@@ -94,7 +94,7 @@ app.post("/update-score", async (req, res) => {
     if (newBestScore === null) {
       newBestScore = score; // First valid score
     } else if (lowerIsBetter) {
-      if (score > 0) { // Ensure score is greater than 0
+      if (score > 0) { // Ensure score is greater than 0, makes sure no bug finders learn to cheat 👀
         newBestScore = Math.min(newBestScore, score);
       }
     } else {
