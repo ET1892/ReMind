@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 
 dotenv.config(); // Load environment variables
 
+
 // Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -21,10 +22,14 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
-// ✅ Health Check API
+
+
+//Health Check API
 app.get("/", (req, res) => res.send("Backend is working!"));
 
-// ✅ User Signup API
+
+
+//User Signup API
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,7 +56,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// ✅ Save Game Score API
+
+
+//Save Game Score API
 app.post("/update-score", async (req, res) => {
   const { uid, game, score } = req.body;
 
@@ -71,55 +78,26 @@ app.post("/update-score", async (req, res) => {
     let gameData = userData.games[game] || { highestScore: 0, history: [] };
 
     const now = new Date();
-    const timestamp =
-      now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) +
-      " " +
-      now.toLocaleDateString("en-GB");
+    const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
 
-    gameData.history.push({ score, timestamp });
+    // Update Firestore atomically
+    const gamePath = `games.${game}`;
+    const historyEntry = { score, timestamp };
 
-    if (gameData.history.length > 50) {
-      gameData.history.shift();
-    }
+    await userRef.update({
+      [`${gamePath}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
+      [`${gamePath}.highestScore`]: score > gameData.highestScore ? score : gameData.highestScore,
+    });
 
-    if (score > gameData.highestScore) {
-      gameData.highestScore = score;
-    }
-
-    await userRef.update({ [`games.${game}`]: gameData });
-
-    res.json({ message: "Score updated", gameData });
+    res.json({ message: "Score updated", historyEntry });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// ✅ Save Game Result API (NEW)
-app.post("/saveGameResult", async (req, res) => {
-  try {
-    const { uid, game, score, timeTaken, level } = req.body;
 
-    if (!uid || !game || score === undefined || !timeTaken || !level) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
 
-    await db.collection("gameResults").add({
-      uid,
-      game,
-      score,
-      timeTaken,
-      level,
-      timestamp: new Date(),
-    });
-
-    res.status(200).json({ message: "Game result saved successfully!" });
-  } catch (error) {
-    console.error("Error saving game result:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// ✅ Fetch User Data API
+//Fetch User Data API
 app.get("/get-user-data", async (req, res) => {
   const { uid } = req.query;
 
@@ -141,7 +119,9 @@ app.get("/get-user-data", async (req, res) => {
   }
 });
 
-// ✅ Start the Server
+
+
+//Start the Server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);

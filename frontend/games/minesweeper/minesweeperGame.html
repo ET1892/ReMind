@@ -155,19 +155,58 @@
     }
   }
 
+
+
   function checkLevelCompletion() {
-    var levelComplete = true;
-    for (var i = 0; i < 10; i++) {
-      for (var j = 0; j < 10; j++) {
-        if ((grid.rows[i].cells[j].getAttribute("data-mine") == "false") && (grid.rows[i].cells[j].innerHTML == "")) levelComplete = false;
-      }
+    let levelComplete = true;
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            let cell = grid.rows[i].cells[j];
+            if (cell.getAttribute("data-mine") === "false" && cell.innerHTML === "") {
+                levelComplete = false;
+            }
+        }
     }
+
     if (levelComplete) {
-      clearInterval(timerInterval);
-      alert("You Win in " + timerElement.textContent + " seconds!");
-      revealMines();
+        clearInterval(timerInterval);
+        let finalSweepScore = parseInt(timerElement.textContent); // Store final time
+
+        alert(`You Win in ${finalSweepScore} seconds!`);
+        revealMines();
+
+        // Retrieve the user ID stored during login
+        let userUID = localStorage.getItem("userUID"); // Make sure this matches login.html
+        if (userUID) {
+            postScoreToServer(userUID, "minesweeper", finalSweepScore);
+        } else {
+            console.error("No user UID found! Ensure the user is logged in.");
+        }
     }
-  }
+}
+
+// Function to send the score to the backend
+function postScoreToServer(uid, game, score) {
+    fetch("http://localhost:3001/update-score", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid, game, score }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Score updated:", data);
+    })
+    .catch(error => {
+        console.error("Error updating score:", error);
+    });
+}
+
+
+
+
+
 
   function handleFirstClick(cell) {
     if (!timerStarted) {
