@@ -1364,29 +1364,29 @@ _triggerGameOver() {
   });
 }
 
-// Send Score to API
+// send score to api
 _sendScoreToAPI() {
-  // Get UID from localStorage or set a default value if missing
-  const uid = localStorage.getItem("uid") || "defaultUID"; // Ensure this is saved correctly during user login
+  // get uid from local, if its not there send error saying not signed in
+  const uid = localStorage.getItem("uid") || "defaultUID"; 
   const gameName = "tetris";  // Static game name
   
-  // Ensure uid exists before making the request
+  // ensure uid exists before making the request
   if (!uid) {
     console.error("You are not signed in.");
     return;
   }
 
-  const finalScore = this.score;  // The final score
+  const finalScore = this.score;  //final score value
 
-  // Send the score to the backend
+  // send score to backend
   fetch("http://localhost:3001/update-score", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      uid: uid,                // User ID from localStorage
-      game: gameName,          // Game name (Tetris)
-      score: finalScore,       // Final score
-      lowerIsBetter: false,    // Higher score is better
+      uid: uid,                // uid from local storage
+      game: gameName,          // game name for firestore
+      score: finalScore,       // final score
+      lowerIsBetter: false,    // set lowerIsBetter to false, as higher is better.
     }),
   })
   .then(response => response.json())
