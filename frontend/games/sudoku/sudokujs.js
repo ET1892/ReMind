@@ -1,3 +1,22 @@
+let timer;
+let startTime;
+
+
+function startTimer() {
+    clearInterval(timer); // Reset any existing timer
+    startTime = Date.now();
+    timer = setInterval(() => {
+        let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        document.getElementById('timer').textContent = `Time: ${elapsedTime}s`;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timer);
+}
+
+
+
 (function(global) {
 	"use strict";
 
@@ -319,7 +338,9 @@
 					// Validate the value
 					isValid = this.validateNumber(val, row, col, val);
 					this.cellMatrix[row][col].classList.toggle("invalid", !isValid);
-					if (!isValid) {
+					
+					if (!isValid) 
+						{
 						hasError = true;
 					}
 				}
@@ -549,6 +570,7 @@
 		newGame: function() {
 			var that = this;
 			this.reset();
+			startTimer();
 
 			setTimeout(function() {
 				that.start();
