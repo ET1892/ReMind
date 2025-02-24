@@ -72,6 +72,9 @@ const endGame = () => {
     score = 0;
 };
 
+
+
+
 const winGame = () => {
     clearInterval(timer);
     contentBox.style.display = "none";
@@ -80,10 +83,49 @@ const winGame = () => {
     modalContent.classList.add("modal-correct");
     modalText.innerHTML = `<br><center>You Won!<br>Your Final Score: ${score}  Points.<br>You answered all 10 questions!</center>`;
     usedWords = [];
+
+    const userId = localStorage.getItem("uid"); // get the user ID from local storage
+    const gameName = "scramble"; // name of game for api
+    const finalScore = score; // final score
+
+    // ensure uid exists before making the request
+    if (!userId) {
+        console.error("User ID not found in local storage!");
+        return;
+    }
+
+    saveGameScore(userId, gameName, finalScore);
 };
 
-const initGame = (remainingTime = 45) => {
-    if (questionCount === 10) { 
+// save score and send to backedn
+const saveGameScore = (uid, game, score) => {
+    const lowerIsBetter = false; // lower score set to false as highere score is really better for thsi game 
+
+    fetch("http://localhost:3001/update-score", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid, game, score, lowerIsBetter }), // Sends the score to the backend
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Error saving score:", data.error);
+        } else {
+            console.log("Score saved successfully:", data);
+        }
+    })
+    .catch(error => {
+        console.error("Network error:", error);
+    });
+};
+
+
+
+
+
+
+const initGame = (remainingTime = 45) => { //change back to 45 when done from testing
+    if (questionCount === 3) { //change back to 10 when done testing 
         winGame();
         return;
     }
