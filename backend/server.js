@@ -41,11 +41,11 @@ app.post("/signup", async (req, res) => {
     await db.collection("users").doc(userRecord.uid).set({
       email,
       games: {
-        minesweeper: { highestScore: 0, history: [] },
-        scramble: { highestScore: 0, history: [] },
-        sudoku: { highestScore: 0, history: [] },
-        recall: { highestScore: 0, history: [] },
-        tetris: { highestScore: 0, history: [] },
+        minesweeper: { highestScore: null, history: [] },
+        scramble: { highestScore: null, history: [] },
+        sudoku: { highestScore: null, history: [] },
+        recall: { highestScore: null, history: [] },
+        tetris: { highestScore: null, history: [] },
       },
     });
 
@@ -57,9 +57,7 @@ app.post("/signup", async (req, res) => {
 
 
 
-//Save Game Score API
 app.post("/update-score", async (req, res) => {
-
   console.log("Received Headers:", req.headers);
   console.log("Received Data Type:", typeof req.body);
   console.log("Received Data:", req.body);
@@ -68,9 +66,9 @@ app.post("/update-score", async (req, res) => {
     return res.status(400).json({ error: "Request body is empty or not parsed correctly" });
   }
 
-  const { uid, game, score } = req.body;
+  const { uid, game, score, lowerIsBetter } = req.body;
 
-  if (!uid || !game || typeof score !== "number") {
+  if (!uid || !game || typeof score !== "number" || typeof lowerIsBetter !== "boolean") {
     return res.status(400).json({ error: "Invalid input" });
   }
 
@@ -83,25 +81,39 @@ app.post("/update-score", async (req, res) => {
     }
 
     let userData = userDoc.data();
-    let gameData = userData.games[game] || { highestScore: 0, history: [] };
+    let gameData = userData.games?.[game] || { highestScore: null, history: [] };
 
     const now = new Date();
     const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
 
-    // Update Firestore automically
-    const gamePath = `games.${game}`;
+    // Always update history
     const historyEntry = { score, timestamp };
 
+    let newBestScore = gameData.highestScore;
+
+    if (newBestScore === null) {
+      newBestScore = score; // First valid score
+    } else if (lowerIsBetter) {
+      if (score > 0) { // Ensure score is greater than 0
+        newBestScore = Math.min(newBestScore, score);
+      }
+    } else {
+      newBestScore = Math.max(newBestScore, score);
+    }
+    
+
+    // Update Firestore
     await userRef.update({
-      [`${gamePath}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
-      [`${gamePath}.highestScore`]: score > gameData.highestScore ? score : gameData.highestScore,
+      [`games.${game}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
+      [`games.${game}.highestScore`]: newBestScore,
     });
 
-    res.json({ message: "Score updated", historyEntry });
+    res.json({ message: "Score updated", newBestScore, historyEntry });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 
 

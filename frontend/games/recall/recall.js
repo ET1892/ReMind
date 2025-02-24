@@ -65,20 +65,22 @@
 
 
                 
-
+                
                 if ($(".matched").length == $(".card").length) {
                     _.win();
                 }
+                
 
 
 
                 //force win condition for testing + modal
 
-                /*
+                
                 if (true) { 
                     _.win();
                 }
-                */
+                    
+                
                 
 
 
@@ -97,12 +99,52 @@
 
         showModal: function () {
             const optimalClicks = this.cardsArray.length; // Minimum clicks for perfect play
+            const finalScore = this.clickCount; // Click count as score
+            const userId = localStorage.getItem("uid"); // Get UID from local storage
+            const gameName = "recall";
+        
+            // Ensure userId exists before making the request
+            if (!userId) {
+                console.error("User ID not found in local storage!");
+                return;
+            }
+        
+            // Show the modal with the final score
             this.$overlay.show();
             this.$modal.find(".message").html(`
-                <p>It took you <strong>${this.clickCount}</strong> clicks to finish!</p>
+                <p>It took you <strong>${finalScore}</strong> clicks to finish!</p>
             `);
             this.$modal.fadeIn("slow");
+        
+            // Call API to save score
+            this.saveGameScore(userId, gameName, finalScore);
         },
+        
+
+
+        saveGameScore: function (uid, game, score) {
+            const lowerIsBetter = game === "recall"; // ensures that the lowerisbetter funciton is set to true, as less clicks a higher score in this game
+        
+            fetch("http://localhost:3001/update-score", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ uid, game, score, lowerIsBetter }), // sends lower is better with api fetch to make sure it knows before sending
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("Error saving score:", data.error);
+                } else {
+                    console.log("Score saved successfully:", data);
+                }
+            })
+            .catch(error => {
+                console.error("Network error:", error);
+            });
+        },
+        
+        
+        
         
 
         hideModal: function () {

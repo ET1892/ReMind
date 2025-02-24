@@ -247,7 +247,7 @@
           return;
       }
 
-      let gameScoresHTML = "<h3>Your Highest Scores:</h3><ul>";
+      let gameScoresHTML = "<h3>Your Best Scores:</h3><ul>";
       for (const game in games) {
           gameScoresHTML += `<li><strong>${game}:</strong> ${games[game].highestScore || 0} points</li>`;
       }
