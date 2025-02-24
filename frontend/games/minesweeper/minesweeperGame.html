@@ -170,41 +170,45 @@
 
     if (levelComplete) {
         clearInterval(timerInterval);
-        let finalSweepScore = parseInt(timerElement.textContent); // Store final time
+        let finalSweepScore = parseInt(timerElement.textContent); // store the final time after winnign     ------ change back to parseInt(timerElement.textContent); after testing
 
         alert(`You Win in ${finalSweepScore} seconds!`);
         revealMines();
 
-        // Retrieve the user ID stored during login
-        let userUID = localStorage.getItem("userUID"); // Make sure this matches login.html
-        if (userUID) {
-            postScoreToServer(userUID, "minesweeper", finalSweepScore);
-        } else {
-            console.error("No user UID found! Ensure the user is logged in.");
+        // API call to save the score
+        const userId = localStorage.getItem("uid"); // Get UID from local storage
+        const gameName = "minesweeper"; // Set game name
+        const lowerIsBetter = true; // Lower score (time) is better
+
+        // Ensure userId exists before making the request
+        if (!userId) {
+            console.error("User ID not found in local storage!");
+            return;
         }
+
+        saveGameScore(userId, gameName, finalSweepScore, lowerIsBetter);
     }
 }
 
-// Function to send the score to the backend
-function postScoreToServer(uid, game, score) {
+// Function to send score to API
+function saveGameScore(uid, game, score, lowerIsBetter) {
     fetch("http://localhost:3001/update-score", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ uid, game, score }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid, game, score, lowerIsBetter }), // Sends score to backend
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Score updated:", data);
+        if (data.error) {
+            console.error("Error saving score:", data.error);
+        } else {
+            console.log("Score saved successfully:", data);
+        }
     })
     .catch(error => {
-        console.error("Error updating score:", error);
+        console.error("Network error:", error);
     });
 }
-
-
-
 
 
 

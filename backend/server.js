@@ -41,11 +41,11 @@ app.post("/signup", async (req, res) => {
     await db.collection("users").doc(userRecord.uid).set({
       email,
       games: {
-        minesweeper: { highestScore: null, history: [] },
-        scramble: { highestScore: null, history: [] },
-        sudoku: { highestScore: null, history: [] },
-        recall: { highestScore: null, history: [] },
-        tetris: { highestScore: null, history: [] },
+        minesweeper: { bestScore: null, history: [] },
+        scramble: { bestScore: null, history: [] },
+        sudoku: { bestScore: null, history: [] },
+        recall: { bestScore: null, history: [] },
+        tetris: { bestScore: null, history: [] },
       },
     });
 
@@ -81,7 +81,7 @@ app.post("/update-score", async (req, res) => {
     }
 
     let userData = userDoc.data();
-    let gameData = userData.games?.[game] || { highestScore: null, history: [] };
+    let gameData = userData.games?.[game] || { bestScore: null, history: [] };
 
     const now = new Date();
     const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
@@ -89,7 +89,7 @@ app.post("/update-score", async (req, res) => {
     // Always update history
     const historyEntry = { score, timestamp };
 
-    let newBestScore = gameData.highestScore;
+    let newBestScore = gameData.bestScore;
 
     if (newBestScore === null) {
       newBestScore = score; // First valid score
@@ -105,7 +105,7 @@ app.post("/update-score", async (req, res) => {
     // Update Firestore
     await userRef.update({
       [`games.${game}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
-      [`games.${game}.highestScore`]: newBestScore,
+      [`games.${game}.bestScore`]: newBestScore,
     });
 
     res.json({ message: "Score updated", newBestScore, historyEntry });
