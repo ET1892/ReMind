@@ -90,7 +90,7 @@ const winGame = () => {
 
     // ensure uid exists before making the request
     if (!userId) {
-        console.error("User ID not found in local storage!");
+        console.error("You are not signed in");
         return;
     }
 

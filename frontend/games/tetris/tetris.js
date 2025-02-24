@@ -1,6 +1,6 @@
 'use strict';
 
-
+//disclaimer this code is not mine, it was gotten from codepen at https://codepen.io/REast/pen/bGMyqp
 
 //-------------------------------------------------------------------------
 // 
@@ -1336,29 +1336,72 @@ class ClassicTetris {
     }
   }
   
-  _triggerGameOver() {
-    // stop theme song
-    if (this.gameTheme) {
-      this.gameTheme.pause();
-    }
-    
-    // play game over sound
-    if (this.gameOverSound) {
-      this.gameOverSound.currentTime = 0;
-      this.gameOverSound.play();
-    }
-    
-    this.gameOverLine = 1;
-    this.gameState = ClassicTetris.STATE_GAME_OVER;
-    
-    // fire game-over animation start event
-    this._dispatch(ClassicTetris.GAME_OVER_START, {
-      type: ClassicTetris.GAME_OVER_START,
-      level: this.level,
-      score: this.score,
-      lines: this.lines
-    });
+  // Trigger Game Over Logic
+_triggerGameOver() {
+  // stop theme song
+  if (this.gameTheme) {
+    this.gameTheme.pause();
   }
+
+  // play game over sound
+  if (this.gameOverSound) {
+    this.gameOverSound.currentTime = 0;
+    this.gameOverSound.play();
+  }
+
+  this.gameOverLine = 1;
+  this.gameState = ClassicTetris.STATE_GAME_OVER;
+
+  // Send score to API
+  this._sendScoreToAPI();
+
+  // fire game-over animation start event
+  this._dispatch(ClassicTetris.GAME_OVER_START, {
+    type: ClassicTetris.GAME_OVER_START,
+    level: this.level,
+    score: this.score,
+    lines: this.lines
+  });
+}
+
+// Send Score to API
+_sendScoreToAPI() {
+  // Get UID from localStorage or set a default value if missing
+  const uid = localStorage.getItem("uid") || "defaultUID"; // Ensure this is saved correctly during user login
+  const gameName = "tetris";  // Static game name
+  
+  // Ensure uid exists before making the request
+  if (!uid) {
+    console.error("You are not signed in.");
+    return;
+  }
+
+  const finalScore = this.score;  // The final score
+
+  // Send the score to the backend
+  fetch("http://localhost:3001/update-score", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      uid: uid,                // User ID from localStorage
+      game: gameName,          // Game name (Tetris)
+      score: finalScore,       // Final score
+      lowerIsBetter: false,    // Higher score is better
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error("Error saving score:", data.error);
+    } else {
+      console.log("Score saved successfully:", data);
+    }
+  })
+  .catch(error => {
+    console.error("Network error:", error);
+  });
+}
+
   
   _processGameOver() {
     if ((this.frameCounter % 8) === 0) {  //4) === 0) {
