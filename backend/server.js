@@ -20,7 +20,6 @@ const db = admin.firestore();
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
 
 
 
@@ -60,6 +59,15 @@ app.post("/signup", async (req, res) => {
 
 //Save Game Score API
 app.post("/update-score", async (req, res) => {
+
+  console.log("Received Headers:", req.headers);
+  console.log("Received Data Type:", typeof req.body);
+  console.log("Received Data:", req.body);
+
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ error: "Request body is empty or not parsed correctly" });
+  }
+
   const { uid, game, score } = req.body;
 
   if (!uid || !game || typeof score !== "number") {
@@ -80,7 +88,7 @@ app.post("/update-score", async (req, res) => {
     const now = new Date();
     const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
 
-    // Update Firestore atomically
+    // Update Firestore automically
     const gamePath = `games.${game}`;
     const historyEntry = { score, timestamp };
 
