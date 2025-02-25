@@ -1,23 +1,39 @@
 let timer;
 let startTime;
-
+let isTimerRunning = false;
+let elapsedTime = 0; // Store elapsed time when paused
 
 function startTimer() {
+    if (!isTimerRunning) {
+        startTime = Date.now() - elapsedTime * 1000; // Resume from elapsed time
+        timer = setInterval(() => {
+            elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+            let minutes = Math.floor(elapsedTime / 60);
+            let seconds = elapsedTime % 60;
+            document.getElementById('timer').textContent = `Time: ${minutes}m ${seconds}s`;
+        }, 1000);
+        isTimerRunning = true;
+    }
+}
+
+function stopTimer() {
     clearInterval(timer);
-    startTime = Date.now();
-    timer = setInterval(() => {
-        let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        let minutes = Math.floor(elapsedTime / 60);
-        let seconds = elapsedTime % 60;
-        document.getElementById('timer').textContent = `Time: ${minutes}m ${seconds}s`; //added mins and seconds
-    }, 1000);
+    isTimerRunning = false;
 }
 
-function stopTimer()
-{
-	clearInterval(timer);
+
+function toggleTimer() {
+    if (isTimerRunning) {
+        stopTimer();
+    } else {
+        startTimer();
+    }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById("playPauseBtn").addEventListener("click", toggleTimer);
+    startTimer(); // Automatically start the timer when the game loads
+});
 
 
 
@@ -221,6 +237,11 @@ function stopTimer()
 			});
 
 			this.table.classList.remove("valid-matrix");
+
+			stopTimer();
+			elapsedTime = 0;
+			document.getElementById('timer').textContent = "Time: 0m 0s"; // Reset display back to 0m 0s
+			startTimer(); //Restart tehe timer
 		},
 
 		/**

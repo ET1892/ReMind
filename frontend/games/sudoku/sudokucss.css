@@ -11,7 +11,7 @@ body {
 }
 
 .sudoku-container {
-	border: 4px solid #444444; /* Changed from brown to dark gray */
+	border: 4px solid #444444; 
 	margin: 0 auto;
 	position: relative;
 	padding: 0 2px;
@@ -27,7 +27,7 @@ body {
 .sudoku-container::before {
 	width: 156px;
 	border-width: 0 4px;
-	border-color: transparent #444444 transparent #444444; /* Changed from brown to dark gray */
+	border-color: transparent #444444 transparent #444444; 
 	top: 4px;
 	left: 160px;
 	bottom: 4px;
@@ -36,7 +36,7 @@ body {
 .sudoku-container::after {
 	height: 156px;
 	border-width: 4px 0;
-	border-color: #444444 transparent #444444 transparent; /* Changed from brown to dark gray */
+	border-color: #444444 transparent #444444 transparent; 
 	left: 4px;
 	top: 160px;
 	right: 4px;
@@ -58,29 +58,29 @@ tr:nth-child(6) input {
 	text-align: center;
 	font-size: 20px;
 	padding: 0;
-	border: 3px #555555 solid; /* Changed from brown to medium gray */
-	background-color: #acacac; /* Changed from brown to dark gray */
+	border: 3px #555555 solid; 
+	background-color: #acacac; 
 	color: #eee;
 }
 
 .sudoku-container input:focus {
-	border-color: #777777; /* Changed from teal to medium gray */
+	border-color: #777777; 
 }
 
 .sudoku-container input.highlight {
-	background-color: #888888; /* Changed from teal to light gray */
-	border-color: #888888; /* Changed from teal to light gray */
+	background-color: #888888; 
+	border-color: #888888; 
 }
 
 .sudoku-container input.disabled {
 	cursor: not-allowed;
-	background-color: #666666; /* Changed from teal to medium-dark gray */
-	border-color: #666666; /* Changed from teal to medium-dark gray */
+	background-color: #666666; 
+	border-color: #666666; 
 }
 
 .sudoku-container input.disabled.highlight {
-	background-color: #888888; /* Changed from teal to light gray */
-	border-color: #888888; /* Changed from teal to light gray */
+	background-color: #888888; 
+	border-color: #888888; 
 }
 
 .sudoku-container .invalid {
@@ -96,7 +96,7 @@ tr:nth-child(6) input {
 }
 
 #controls {
-	margin: 20px 0;
+	margin-bottom: 15px;
 }
 
 .btn.primary {
@@ -129,4 +129,29 @@ tr:nth-child(6) input {
 
 }
 
+
+	#timer-container
+	{
+		display: flex;
+		align-items: center;
+		gap: 5px;
+	}
+
+
+#playPauseBtn {
+	margin-top: -10px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: #808080;
+    color: #DDDDDD;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.5s ease;
+	align-items: center;
+}
+
+#playPauseBtn:hover {
+    background-color: #555555;
+}
   
