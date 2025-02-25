@@ -3,17 +3,16 @@ let startTime;
 
 
 function startTimer() {
-    clearInterval(timer); // Reset any existing timer
+    clearInterval(timer);
     startTime = Date.now();
     timer = setInterval(() => {
         let elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        document.getElementById('timer').textContent = `Time: ${elapsedTime}s`;
+        let minutes = Math.floor(elapsedTime / 60);
+        let seconds = elapsedTime % 60;
+        document.getElementById('timer').textContent = `Time: ${minutes}m ${seconds}s`; //added mins and seconds
     }, 1000);
 }
 
-function stopTimer() {
-    clearInterval(timer);
-}
 
 
 
