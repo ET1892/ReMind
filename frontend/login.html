@@ -21,11 +21,11 @@
             border-radius: 8px;
             width: 300px;
             border: 3px solid #000000;
-            text-align: center; /* Align the content to the center */
+            text-align: center; 
         }
 
         .login-form img {
-            width: 60%; /* Adjust the width of the logo */
+            width: 60%; 
         }
 
         .login-form h2 {
@@ -195,30 +195,35 @@
     const loginForm = document.getElementById("loginForm");
     const messageContainer = document.getElementById("messageContainer");
 
-    // Check if both userEmail and UID exist
+    // Check if user is signed in
     if (userEmail && uid) {
         loginForm.style.display = "none";
 
         messageContainer.innerHTML = `
             <div class="message">You are signed in as <strong>${userEmail}</strong></div>
+            <button id="HistoryButton" style="margin-top: 10px; padding: 8px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Game History</button>
             <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
-            <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
         `;
 
+        // Game History button event listener
+        document.getElementById("HistoryButton").addEventListener("click", function () {
+            window.location.href = "history.html";
+        });
+
+        // Logout button event listener
         document.getElementById("logoutButton").addEventListener("click", function () {
             signOut(auth).then(() => {
                 localStorage.removeItem("userEmail");
-                localStorage.removeItem("uid"); // Remove UID from local storage
+                localStorage.removeItem("uid");
                 location.reload();
             }).catch((error) => {
                 console.error("Error signing out: ", error);
             });
         });
-
-        // Load user game data
-        loadUserGameData();
     }
 });
+
+
 
 
   async function loadUserGameData() {
@@ -312,7 +317,7 @@
 
               
 
-              // Redirect to home page after successful login
+              // Redirect to home page after successful login, after 10s
               setTimeout(() => window.location.href = "home.html", 10000);
           })
           .catch((error) => {
