@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 dotenv.config(); // Load environment variables
 
 
-// Initialize Firebase Admin SDK
+// Initialize Firebase Admin SDK from env
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -23,7 +23,7 @@ app.use(express.json());
 
 
 
-//Health Check API
+//Health Check
 app.get("/", (req, res) => res.send("Backend is working!"));
 
 
@@ -33,15 +33,17 @@ app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const userRecord = await admin.auth().createUser({
+    const userRecord = await admin.auth().createUser({ //Ensures email and password
       email,
       password,
     });
 
+
+    //creates object of games 
     await db.collection("users").doc(userRecord.uid).set({
       email,
       games: {
-        minesweeper: { bestScore: null, history: [] },
+        minesweeper: { bestScore: null, history: [] }, //changed from 0 to null, as nothing was lower than 0 so just leave it empty on a new account
         scramble: { bestScore: null, history: [] },
         sudoku: { bestScore: null, history: [] },
         recall: { bestScore: null, history: [] },
@@ -57,7 +59,8 @@ app.post("/signup", async (req, res) => {
 
 
 
-app.post("/update-score", async (req, res) => {
+app.post("/update-score", async (req, res) => 
+  {
   console.log("Received Headers:", req.headers);
   console.log("Received Data Type:", typeof req.body);
   console.log("Received Data:", req.body);
@@ -86,7 +89,7 @@ app.post("/update-score", async (req, res) => {
     const now = new Date();
     const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
 
-    // Always update history
+    // Always update history even if score worse, update to history but not high score
     const historyEntry = { score, timestamp };
 
     let newBestScore = gameData.bestScore;
@@ -117,7 +120,7 @@ app.post("/update-score", async (req, res) => {
 
 
 
-//Fetch User Data API
+//Fetch User Data API when signing in
 app.get("/get-user-data", async (req, res) => {
   const { uid } = req.query;
 

@@ -75,10 +75,11 @@
 
                 //force win condition for testing + modal
 
-                
+                /*
                 if (true) { 
                     _.win();
                 }
+                */
                     
                 
                 
