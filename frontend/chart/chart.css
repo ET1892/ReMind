@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+
+body.light-mode {
+    background-color: white;
+    color: black;
+}
+
+
+body:not(.light-mode) {
+    background-color: black;
+    color: white;
+}
+
+
+h2 {
+    margin-top: 10px;
+}
+
+
+body.light-mode h2 {
+    color: rgba(0, 0, 0, 0.825);
+}
+
+
+body:not(.light-mode) h2 {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+
+body.light-mode table {
+    background: #fff;
+}
+
+
+body:not(.light-mode) table {
+    background: #222;
+    color: white;
+}
+
+
+thead {
+    background-color: #007bff;
+    border-radius: 10px;
+    color: white;
+}
+
+
+body:not(.light-mode) thead {
+    background-color: #444;
+}
+
+
+th, td {
+    padding: 12px;
+    border: 2px solid #ddd;
+    text-align: center;
+}
+
+
+body.light-mode tbody tr:nth-child(even) {
+    background-color: #ebebeba2;
+}
+
+
+body:not(.light-mode) tbody tr:nth-child(even) {
+    background-color: rgba(50, 50, 50, 0.5);
+}
+
+
+tbody tr:hover {
+    background-color: rgba(161, 161, 161, 0.4);
+    transition: 0.5s;
+}
+
+body:not(.light-mode) tbody tr:hover {
+    background-color: rgba(100, 100, 100, 0.4);
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}

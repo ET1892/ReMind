@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game History Table</title>
+    <link rel="stylesheet" href="universal.css">
+    <link rel="stylesheet" href="chart.css">
+    <script type="module" src="chart.js"></script>
+</head>
+<body>
+
+    <h2>Game History Table</h2>
+    <table id="gameTable">
+        <thead>
+            <tr id="headerRow">
+                <th>Game</th> 
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        function applyTheme() {
+            const body = document.body;
+            if (localStorage.getItem('theme') === 'light') {
+                body.classList.add('light-mode');
+            } else {
+                body.classList.remove('light-mode');
+            }
+        }
+
+        applyTheme();
+        // Listen for changes to localStorage and update theme to light or dark
+        window.addEventListener("storage", function(event) {
+            if (event.key === "theme") {
+                applyTheme();
+            }
+        });
+    </script>
+
+</body>
+</html>

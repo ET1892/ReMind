@@ -7,7 +7,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
     <link rel="stylesheet" href="universal.css">
     <style>
-        /* Center the form on the page */
+
+
         .login-container {
             display: flex;
             justify-content: center;
@@ -20,9 +21,24 @@
             padding: 35px;
             border-radius: 8px;
             width: 300px;
-            border: 3px solid #000000;
             text-align: center; 
         }
+
+        .dark-mode .login-form
+        {
+            background-color: #000000;
+            color: #fff;
+        }
+
+
+        body {
+            transition: background-color 0.5s ease;
+        }
+
+        .login-form {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
 
         .login-form img {
             width: 60%; 
@@ -121,8 +137,9 @@
 <div class="content">
   <div class="login-container">
     <div class="login-form">
-      <!-- Logo in the center -->
-      <img src="logo/logoBlack.svg" alt="Logo" />
+
+
+    <img id="loginLogo" src="logo/logoBlack.svg" alt="Logo" />
       
       <form id="loginForm">
         <input type="email" id="email" placeholder="Email" required>
@@ -145,30 +162,43 @@
 </div>
 
 <script>
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const body = document.body;
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const loginLogo = document.getElementById('loginLogo'); // Login page logo
+    const body = document.body;
+  
+    // Function to update the theme based on localStorage
+    function updateTheme() {
+    const isDarkMode = localStorage.getItem('theme') === 'dark';
 
-  // Load theme preference from localStorage or default to light mode if no preference is set
-  if (localStorage.getItem('theme') === 'dark') {
-    themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-  } else {
-    body.classList.add('light-mode');
-    themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-  }
-
-  themeToggleBtn.addEventListener('click', function () {
-    body.classList.toggle('light-mode');
-
-    if (body.classList.contains('light-mode')) {
-      themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-      localStorage.setItem('theme', 'light'); 
+    if (isDarkMode) {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode'); // Apply dark mode
+        themeIcon.src = 'logo/sun-icon.svg';
+        if (loginLogo) loginLogo.src = 'logo/logo.svg'; // White logo in dark mode
     } else {
-      themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-      localStorage.setItem('theme', 'dark'); 
+        body.classList.remove('dark-mode'); // Remove dark mode
+        body.classList.add('light-mode');
+        themeIcon.src = 'logo/moon-icon.svg';
+        if (loginLogo) loginLogo.src = 'logo/logoBlack.svg'; // Black logo in light mode
     }
-  });
-</script>
+}
+
+  
+    // Load and apply saved theme on page load
+    if (!localStorage.getItem('theme')) {
+      localStorage.setItem('theme', 'light'); // Default to light mode if not set
+    }
+    updateTheme(); // Apply the correct theme on page load
+  
+    // Toggle theme when button is clicked
+    themeToggleBtn.addEventListener('click', function () {
+      const isCurrentlyDark = localStorage.getItem('theme') === 'dark';
+      localStorage.setItem('theme', isCurrentlyDark ? 'light' : 'dark'); // Toggle theme in storage
+      updateTheme(); // Apply changes
+    });
+  </script>
+  
 
 
 <script type="module">

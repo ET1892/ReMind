@@ -1,16 +1,9 @@
-
-
-//Populates user data client side, by using the locally stored UID and their email, this makes it that theres no sign in etc, when the page is refreshed it will also add the resutls of games they have played
-//and new scores, since signing in
-
-
-
-// Import Firebase functions
+// Import Firebase functions, all boilerplate from firebase themselves
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
-// Firebase configuration for client side retrieval
+// Firebase configuration for client-side retrieval
 const firebaseConfig = {
     apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
     authDomain: "remind-75124.firebaseapp.com",
@@ -62,7 +55,8 @@ function populateGameTable(games) {
     for (const game in games) {
         const gameData = games[game] || {}; // Ensure gameData exists
         const gameScores = gameData.history || []; // Extract history array
-        const scores = gameScores.map(entry => entry.score); // Get scores only
+        const bestScore = gameData.bestScore || "N/A"; // Get bestScore (default to "N/A" if missing)
+        const scores = gameScores.map(entry => entry.score); // Extract scores array
 
         if (scores.length === 0) {
             console.log(`No history found for ${game}, skipping...`);
@@ -70,7 +64,7 @@ function populateGameTable(games) {
         }
 
         maxScores = Math.max(maxScores, scores.length);
-        gameDataArray.push({ game, scores });
+        gameDataArray.push({ game, scores, bestScore });
     }
 
     if (gameDataArray.length === 0) {
@@ -83,14 +77,17 @@ function populateGameTable(games) {
     for (let i = 1; i <= maxScores; i++) {
         headerRow.innerHTML += `<th>Score ${i}</th>`;
     }
+    headerRow.innerHTML += `<th>Best Score</th>`; // Add Best Score column
 
     // Populate table rows
-    gameDataArray.forEach(({ game, scores }) => {
+    gameDataArray.forEach(({ game, scores, bestScore }) => {
         let rowHtml = `<tr><td>${game}</td>`;
 
         for (let i = 0; i < maxScores; i++) {
             rowHtml += `<td>${scores[i] !== undefined ? scores[i] : ""}</td>`;
         }
+        
+        rowHtml += `<td><strong>${bestScore}</strong></td>`; // Best Score column
         rowHtml += "</tr>";
 
         tableBody.innerHTML += rowHtml;
