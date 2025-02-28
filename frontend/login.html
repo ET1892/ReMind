@@ -150,7 +150,6 @@
         </div>
       </form>
       
-      <!-- Success and error messages will appear here -->
       <div id="messageContainer"></div>
     </div>
   </div>
@@ -196,175 +195,172 @@
   
 
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
-    authDomain: "remind-75124.firebaseapp.com",
-    projectId: "remind-75124",
-    storageBucket: "remind-75124.firebasestorage.app",
-    messagingSenderId: "358342790086",
-    appId: "1:358342790086:web:7d64b01f8f74d86c21c0c7"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
-  const db = getFirestore(app);
-
-  document.addEventListener("DOMContentLoaded", async function () {
-    const userEmail = localStorage.getItem("userEmail");
-    const uid = localStorage.getItem("uid"); // Get UID from localStorage
-    const loginForm = document.getElementById("loginForm");
-    const messageContainer = document.getElementById("messageContainer");
-
-    // Check if user is signed in
-    if (userEmail && uid) {
-        loginForm.style.display = "none";
-
-        messageContainer.innerHTML = `
-            <div class="message">You are signed in as <strong>${userEmail}</strong></div>
-            <button id="HistoryButton" style="margin-top: 10px; padding: 8px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Game History</button>
-            <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
-        `;
-
-        // Game History button event listener
-        document.getElementById("HistoryButton").addEventListener("click", function () {
-            window.location.href = "history.html";
-        });
-
-        // Logout button event listener
-        document.getElementById("logoutButton").addEventListener("click", function () {
-            signOut(auth).then(() => {
-                localStorage.removeItem("userEmail");
-                localStorage.removeItem("uid");
-                location.reload();
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
-        });
-    }
-});
-
-
-
-
-  async function loadUserGameData() {
-      const user = auth.currentUser;
-      if (user) {
-          const userDocRef = doc(db, "users", user.uid);
-          try {
-              const userDoc = await getDoc(userDocRef);
-              if (userDoc.exists()) {
-                  const games = userDoc.data().games || {}; // Access `games` object
-                  displayGameData(games);
-              } else {
-                  displayGameData(null);
-              }
-          } catch (error) {
-              console.error("Error fetching game data:", error);
-              displayGameData(null);
-          }
-      }
-  }
-
-  function displayGameData(games) {
-      const gameDataContainer = document.getElementById("gameDataContainer");
-      if (!games || Object.keys(games).length === 0) {
-          gameDataContainer.innerHTML = "<p>No game data found. Start playing to track your high scores!</p>";
-          return;
-      }
-
-      let gameScoresHTML = "<h3>Your Best Scores:</h3><ul>";
-      for (const game in games) {
-          gameScoresHTML += `<li><strong>${game}:</strong> ${games[game].highestScore || 0} points</li>`;
-      }
-      gameScoresHTML += "</ul>";
-
-      gameDataContainer.innerHTML = gameScoresHTML;
-  }
-
-  document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const messageContainer = document.getElementById('messageContainer');
-
-      messageContainer.innerHTML = "";
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-          messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
-          return;
-      }
-
-      if (password.length < 6) {
-          messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
-          return;
-      }
-
-
-
-      //checks for UID and email before loading user data or showing the logout button, the storing of UID in local will be used for pushing the game scores
-
-      signInWithEmailAndPassword(auth, email, password)
-          .then(async (userCredential) => {
-              const user = userCredential.user;
-              localStorage.setItem("uid", user.uid); // Store UID in localStorage
-              console.log("User signed in: ", user);
-
-              localStorage.setItem("userEmail", email);
-
-              // Hide login form and show success message
-              document.getElementById("loginForm").style.display = "none";
-              messageContainer.innerHTML = `
-                  <div class="message">You have signed in as <strong>${email}</strong></div>
-                  <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
-                  <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
-              `;
-
-              // Load game data after login
-              await loadUserGameData();
-
-              document.getElementById("logoutButton").addEventListener("click", function () {
-                  signOut(auth).then(() => {
-                      localStorage.removeItem("userEmail");
-                      localStorage.removeItem("uid"); // Remove UID from local storage
-
-                      location.reload();
-                  }).catch((error) => {
-                      console.error("Error signing out: ", error);
-                  });
-              });
-
-              
-
-              // Redirect to home page after successful login, after 10s
-              setTimeout(() => window.location.href = "home.html", 10000);
-          })
-          .catch((error) => {
-              const errorCode = error.code;
-              console.error("Error signing in: ", errorCode);
-
-              let errorMessage = "Invalid email or password.";
-
-              if (errorCode === "auth/user-not-found") {
-                  errorMessage = "No account found with this email. <a href='signup.html'>Sign up</a>.";
-              } else if (errorCode === "auth/wrong-password") {
-                  errorMessage = "Incorrect email or password.";
-              } else if (errorCode === "auth/invalid-email") {
-                  errorMessage = "Please enter a valid email address.";
-              } else if (errorCode === "auth/too-many-requests") {
-                  errorMessage = "Too many failed login attempts. Please try again later.";
-              }
-
-              messageContainer.innerHTML = `<div class="error">${errorMessage}</div>`;
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4XFhK_ZPpJFBz8XuYlPmH3DZDMSRYilE",
+      authDomain: "remind-75124.firebaseapp.com",
+      projectId: "remind-75124",
+      storageBucket: "remind-75124.firebasestorage.app",
+      messagingSenderId: "358342790086",
+      appId: "1:358342790086:web:7d64b01f8f74d86c21c0c7"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app);
+  
+    document.addEventListener("DOMContentLoaded", async function () {
+      const userEmail = localStorage.getItem("userEmail");
+      const uid = localStorage.getItem("uid"); // Get UID from localStorage
+      const loginForm = document.getElementById("loginForm");
+      const messageContainer = document.getElementById("messageContainer");
+  
+      // Check if user is signed in
+      if (userEmail && uid) {
+          loginForm.style.display = "none";
+  
+          messageContainer.innerHTML = `
+              <div class="message">You are signed in as <strong>${userEmail}</strong></div>
+              <button id="HistoryButton" style="margin-top: 10px; padding: 8px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Game History</button>
+              <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+          `;
+  
+          // Game History button event listener
+          document.getElementById("HistoryButton").addEventListener("click", function () {
+              window.location.href = "history.html";
           });
+  
+          // Logout button event listener
+          document.getElementById("logoutButton").addEventListener("click", function () {
+              signOut(auth).then(() => {
+                  localStorage.removeItem("userEmail");
+                  localStorage.removeItem("uid");
+                  location.reload();
+              }).catch((error) => {
+                  console.error("Error signing out: ", error);
+              });
+          });
+      }
   });
-</script>
+  
+    async function loadUserGameData() {
+        const user = auth.currentUser;
+        if (user) {
+            const userDocRef = doc(db, "users", user.uid);
+            try {
+                const userDoc = await getDoc(userDocRef);
+                if (userDoc.exists()) {
+                    const games = userDoc.data().games || {}; // Access `games` object
+                    displayGameData(games);
+                } else {
+                    displayGameData(null);
+                }
+            } catch (error) {
+                console.error("Error fetching game data:", error);
+                displayGameData(null);
+            }
+        }
+    }
+  
+    function displayGameData(games) {
+        const gameDataContainer = document.getElementById("gameDataContainer");
+        if (!games || Object.keys(games).length === 0) {
+            gameDataContainer.innerHTML = "<p>No game data found. Start playing to track your high scores!</p>";
+            return;
+        }
+    }
+  
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+  
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const messageContainer = document.getElementById('messageContainer');
+  
+        messageContainer.innerHTML = "";
+  
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            messageContainer.innerHTML = '<div class="error">Please enter a valid email address.</div>';
+            return;
+        }
+  
+        if (password.length < 6) {
+            messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
+            return;
+        }
+  
+        //checks for UID and email before loading user data or showing the logout button, the storing of UID in local will be used for pushing the game scores
+  
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                const user = userCredential.user;
+                localStorage.setItem("uid", user.uid); // Store UID in localStorage
+                console.log("User signed in: ", user);
+  
+                localStorage.setItem("userEmail", email);
+  
+                // Hide login form and show success message
+                // Also allows game history to be clicked upon refresh which was not working previously
+                document.getElementById("loginForm").style.display = "none";
+                messageContainer.innerHTML = `
+                    <div class="message">You have signed in as <strong>${email}</strong></div>
+                    <button id="HistoryButton" style="margin-top: 10px; padding: 8px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Game History</button>
+                    <button id="logoutButton" style="margin-top: 10px; padding: 8px; background-color: red; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">Logout</button>
+                    <div id="gameDataContainer" class="message" style="margin-top: 20px;"></div>
+                `;
+
+
+                // Reattach the event listener for the Game History button when page loaded
+                document.getElementById("HistoryButton").addEventListener("click", function () {
+                    window.location.href = "history.html";
+                });
+
+  
+                // Load game data after login
+                await loadUserGameData();
+  
+                document.getElementById("logoutButton").addEventListener("click", function () {
+                    signOut(auth).then(() => {
+                        localStorage.removeItem("userEmail");
+                        localStorage.removeItem("uid"); // Remove UID from local storage
+  
+                        location.reload();
+                    }).catch((error) => {
+                        console.error("Error signing out: ", error);
+                    });
+                });
+  
+                
+  
+                // Redirect to home page after successful login, after 10s
+                setTimeout(() => window.location.href = "home.html", 10000);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                console.error("Error signing in: ", errorCode);
+  
+                let errorMessage = "Invalid email or password.";
+  
+                if (errorCode === "auth/user-not-found") {
+                    errorMessage = "No account found with this email. <a href='signup.html'>Sign up</a>.";
+                } else if (errorCode === "auth/wrong-password") {
+                    errorMessage = "Incorrect email or password.";
+                } else if (errorCode === "auth/invalid-email") {
+                    errorMessage = "Please enter a valid email address.";
+                } else if (errorCode === "auth/too-many-requests") {
+                    errorMessage = "Too many failed login attempts. Please try again later.";
+                }
+  
+                messageContainer.innerHTML = `<div class="error">${errorMessage}</div>`;
+            });
+    });
+  </script>
+
 
 
 

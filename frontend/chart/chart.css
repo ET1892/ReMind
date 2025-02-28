@@ -3,7 +3,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    transition: background-color 0.5s, color 0.5s; /* Smooth transition */
 }
 
 
@@ -91,7 +91,7 @@ tbody tr:hover {
 }
 
 body:not(.light-mode) tbody tr:hover {
-    background-color: rgba(100, 100, 100, 0.4);
+    background-color: rgba(182, 182, 182, 0.57);
 }
 
 @media screen and (max-width: 600px) {
