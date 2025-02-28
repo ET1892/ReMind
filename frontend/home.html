@@ -6,6 +6,90 @@
   <title>Home</title>
   <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
   <link rel="stylesheet" href="universal.css">
+  <style>
+    /* Inline styles for the banner */
+    .banner {
+
+      width: 100%;
+      background-color: rgb(121, 68, 173); 
+      color: white;
+      text-align: center;
+      margin-top: 40px;
+      height: 25vh;
+      transition: background-color 0.3s, color 0.3s;
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      flex-direction: center; 
+    }
+
+    .banner-logo img {
+      width: 190px; 
+      height: auto;
+      margin-right: 5%;
+    }
+
+    .banner h1 {
+      font-size: 5em;
+    }
+
+    /* Default text color in dark mode */
+    body:not(.light-mode) .banner h1 {
+      color: black;
+    }
+
+    /* Text color in light mode */
+    body.light-mode .banner h1 {
+      color: white;
+    }
+
+    /* Dark mode styles for the banner */
+    body:not(.light-mode) .banner {
+      background-color: rgba(125, 125, 125, 0.698); /* Change to grey in dark mode */
+    }
+
+    /* Styling for the content below the banner */
+    .content {
+
+      width: 90%;
+      padding-top: 32vh; /* this line specifically, on mac this is too much, and on iphone its perfect */
+
+    }
+
+    .subtitle {
+      color: #333;
+    }
+
+    .body-text {
+      font-size: .5em;
+      color: #666;
+    }
+
+    /* Enable scrolling for the body content */
+    body {
+      overflow-y: scroll; /* Allows vertical scrolling */
+    }
+
+    /* Styling for the dark mode body text */
+    body:not(.light-mode) .content .subtitle,
+    body:not(.light-mode) .content .body-text {
+      color: white; /* White text in dark mode */
+    }
+
+    body.light-mode .content .subtitle,
+    body.light-mode .content .body-text {
+      color: black; /* Black text in light mode */
+    }
+
+
+
+    @media screen and (min-width: 1024px) {
+      .content {
+        padding-top: 0vh; /* Reduce the padding for larger screens */
+      }
+    }
+
+  </style>
 </head>
 <body>
 
@@ -34,20 +118,30 @@
     </a>
   </div>
 
-  <!--
-<div class="content">
-  <a href="learn.html" id="welcomeLink">
-    <h1>Welcome!</h1>
-  </a>
-</div>
--->
+  <!-- Banner Section -->
+  <div class="banner">
+    <!-- Logo inside the banner, centered -->
+    <div class="banner-logo">
+      <img src="logo/logo.svg" alt="Logo">
+    </div>
 
+    <h1>ReMind</h1>
+  </div>
 
-<div class="content">
-  <h1>Home</h1>
-</div>
+  <!-- Content Section below the banner -->
+  <div class="content">
+    <!-- Subtitle: What is ReMind? -->
+    <div class="subtitle">What is ReMind?</div>
+    <div class="body-text">
+      ReMind is my final year project! It is a website dedicated to Human Memory Education. With this website I have taken the approach to "game-ify" preventing cognitive decline.
+    </div>
 
-
+    <!-- Example of another subtitle and text -->
+    <div class="subtitle">Example</div>
+    <div class="body-text">
+      Here is an example of body text that goes along with the subtitle. This text can explain the features of the platform, showcase tips for using it effectively, or even provide some user testimonials. The possibilities are endless, and the content can be adapted to your needs.
+    </div>
+  </div>
 
   <script>
     const themeToggleBtn = document.getElementById('themeToggle');
@@ -56,6 +150,7 @@
 
     // Load theme preference from localStorage or default to light mode if no preference is set
     if (localStorage.getItem('theme') === 'dark') {
+      body.classList.remove('light-mode');
       themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
     } else {
       body.classList.add('light-mode');
