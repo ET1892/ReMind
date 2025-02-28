@@ -1,174 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
-  <link rel="stylesheet" href="universal.css">
-  <style>
-    /* Inline styles for the banner */
-    .banner {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
+    <link rel="stylesheet" href="universal.css">
+    <style>
 
-      width: 100%;
-      background-color: rgb(121, 68, 173); 
-      color: white;
-      text-align: center;
-      margin-top: 40px;
-      height: 25vh;
-      transition: background-color 0.3s, color 0.3s;
-      display: flex;
-      align-items: center; 
-      justify-content: center; 
-      flex-direction: center; 
-    }
+        .banner {
+            width: 100%;
+            background-color: rgb(121, 68, 173);
+            color: white;
+            text-align: center;
+            margin-top: 40px;
+            height: 25vh;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: center;
+        }
 
-    .banner-logo img {
-      width: 190px; 
-      height: auto;
-      margin-right: 5%;
-    }
+        .banner-logo img {
+            width: 190px;
+            height: auto;
+            margin-right: 5%;
+        }
 
-    .banner h1 {
-      font-size: 5em;
-    }
-
-    /* Default text color in dark mode */
-    body:not(.light-mode) .banner h1 {
-      color: black;
-    }
-
-    /* Text color in light mode */
-    body.light-mode .banner h1 {
-      color: white;
-    }
-
-    /* Dark mode styles for the banner */
-    body:not(.light-mode) .banner {
-      background-color: rgba(125, 125, 125, 0.698); /* Change to grey in dark mode */
-    }
-
-    /* Styling for the content below the banner */
-    .content {
-
-      width: 90%;
-      padding-top: 32vh; /* this line specifically, on mac this is too much, and on iphone its perfect */
-
-    }
-
-    .subtitle {
-      color: #333;
-    }
-
-    .body-text {
-      font-size: .5em;
-      color: #666;
-    }
-
-    /* Enable scrolling for the body content */
-    body {
-      overflow-y: scroll; /* Allows vertical scrolling */
-    }
-
-    /* Styling for the dark mode body text */
-    body:not(.light-mode) .content .subtitle,
-    body:not(.light-mode) .content .body-text {
-      color: white; /* White text in dark mode */
-    }
-
-    body.light-mode .content .subtitle,
-    body.light-mode .content .body-text {
-      color: black; /* Black text in light mode */
-    }
+        .banner h1 {
+            font-size: 5em;
+        }
 
 
+        body:not(.light-mode) .banner h1 {
+            color: black;
+        }
 
-    @media screen and (min-width: 1024px) {
-      .content {
-        padding-top: 0vh; /* Reduce the padding for larger screens */
-      }
-    }
 
-  </style>
+        body.light-mode .banner h1 {
+            color: white;
+        }
+
+
+        body:not(.light-mode) .banner {
+            background-color: rgb(68, 68, 68); 
+        }
+
+
+        .content {
+            width: 75%;
+            padding-top: 105vh;
+            padding-bottom: 2rem;
+        }
+
+
+        .content-section {
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .body-text {
+            font-size: .5em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        body {
+            overflow-y: scroll;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body:not(.light-mode) .content .subtitle,
+        body:not(.light-mode) .content .body-text {
+            color: white;
+        }
+
+        body.light-mode .content .subtitle,
+        body.light-mode .content .body-text {
+            color: black;
+        }
+
+        @media screen and (min-width: 1024px) {
+            .content {
+                padding-top: 38vh;
+            }
+        }
+
+        @media screen and (min-width: 2024px) {
+            .content {
+                padding-top: 8vh;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <a href="home.html">
+                <img src="logo/logo.svg" alt="Logo" width="40" height="40">
+            </a>
+        </div>
 
-  <div class="navbar">
-    <div class="navbar-logo">
-      <a href="home.html">
-        <img src="logo/logo.svg" alt="Logo" width="40" height="40">
-      </a>
+        
+        <div class="navbar-links">
+            <a href="learn.html">Learn</a>
+            <a href="games.html">Games</a>
+            <a href="facts.html">Facts</a>
+        </div>
+        <!-- Light/Dark mode toggle button in the navbar -->
+        <button class="theme-toggle" id="themeToggle">
+            <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
+        </button>
+        <!-- Login Icon placed on the rightmost side -->
+        <a href="login.html" class="login-icon">
+            <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
+        </a>
+    </div>
+    <!-- Banner Section -->
+    <div class="banner">
+        <!-- Logo inside the banner, centered -->
+        <div class="banner-logo">
+            <img src="logo/logo.svg" alt="Logo">
+        </div>
+        <h1>ReMind</h1>
     </div>
 
-    <!-- Flex container for the links -->
-    <div class="navbar-links">
-      <a href="learn.html">Learn</a>
-      <a href="games.html">Games</a>
-      <a href="facts.html">Facts</a>
+
+
+    <div class="content">
+        <div class="content-section">
+            <div class="subtitle">What is ReMind?</div>
+            <div class="body-text">
+                ReMind is my final year project! It is a website dedicated to Human Memory Education. With this website I have taken the approach to "game-ify" memory education.
+            </div>
+        </div>
+
+
+
+        <div class="content-section">
+            <div class="subtitle">
+                <a href="learn.html">Learn</a>
+            </div>
+            <div class="body-text">
+                If you want to learn more about memory, how it is: created, compounded and lost, <a href="learn.html">click here</a>.
+            </div>
+        </div>
+
+
+
+        <div class="content-section">
+            <div class="subtitle">
+                <a href="games.html">Games</a>
+            </div>
+            <div class="body-text">
+                This website is about making cognitive excercise fun. I have curated 5 games which have been shown to improve cognition and prevent cognitive decline.
+                If you create an account your scores will be stored when you sign in, they can be accessed by clicking the "Game History" button after signing in.
+            </div>
+        </div>
+
+
+
+        <div class="content-section">
+          <div class="subtitle">
+              <a href="facts.html">Facts</a>
+          </div>
+          <div class="body-text">
+            If you want to learn more visit the facts page, where you can learn a new fact at the click of a button!
+          </div>
+      </div>
+
+      
+      <div class="content-section">
+        <div class="subtitle">
+            <a>Light & Dark Mode</a>
+        </div>
+        <div class="body-text">
+          If you want to make things darker, you can click the Moon in the top right corner to enable dark mode, simply click the sun to enable light mode.
+        </div>
     </div>
 
-    <!-- Light/Dark mode toggle button in the navbar -->
-    <button class="theme-toggle" id="themeToggle">
-      <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
-    </button>
 
-    <!-- Login Icon placed on the rightmost side -->
-    <a href="login.html" class="login-icon">
-      <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
-    </a>
-  </div>
-
-  <!-- Banner Section -->
-  <div class="banner">
-    <!-- Logo inside the banner, centered -->
-    <div class="banner-logo">
-      <img src="logo/logo.svg" alt="Logo">
     </div>
-
-    <h1>ReMind</h1>
-  </div>
-
-  <!-- Content Section below the banner -->
-  <div class="content">
-    <!-- Subtitle: What is ReMind? -->
-    <div class="subtitle">What is ReMind?</div>
-    <div class="body-text">
-      ReMind is my final year project! It is a website dedicated to Human Memory Education. With this website I have taken the approach to "game-ify" preventing cognitive decline.
-    </div>
-
-    <!-- Example of another subtitle and text -->
-    <div class="subtitle">Example</div>
-    <div class="body-text">
-      Here is an example of body text that goes along with the subtitle. This text can explain the features of the platform, showcase tips for using it effectively, or even provide some user testimonials. The possibilities are endless, and the content can be adapted to your needs.
-    </div>
-  </div>
-
-  <script>
-    const themeToggleBtn = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const body = document.body;
-
-    // Load theme preference from localStorage or default to light mode if no preference is set
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.remove('light-mode');
-      themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-    } else {
-      body.classList.add('light-mode');
-      themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-    }
-
-    themeToggleBtn.addEventListener('click', function () {
-      body.classList.toggle('light-mode');
-
-      if (body.classList.contains('light-mode')) {
-        themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-        localStorage.setItem('theme', 'light'); 
-      } else {
-        themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-        localStorage.setItem('theme', 'dark'); 
-      }
-    });
-  </script>
-
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+        // Load theme preference from localStorage or default to light mode if no preference is set
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.remove('light-mode');
+            themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+        } else {
+            body.classList.add('light-mode');
+            themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+        }
+        themeToggleBtn.addEventListener('click', function () {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 </html>
