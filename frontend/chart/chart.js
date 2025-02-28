@@ -42,6 +42,8 @@ async function loadUserGameData() {
     });
 }
 
+
+
 // FUNCTION TO POPULATE THE TABLE WITH GAME DATA
 function populateGameTable(games) {
     const tableBody = document.querySelector("#gameTable tbody");
@@ -56,15 +58,23 @@ function populateGameTable(games) {
         const gameData = games[game] || {}; // Ensure gameData exists
         const gameScores = gameData.history || []; // Extract history array
         const bestScore = gameData.bestScore || "N/A"; // Get bestScore (default to "N/A" if missing)
-        const scores = gameScores.map(entry => entry.score); // Extract scores array
+        
+        // Store both score and timestamp in an array
+        const scoresWithTimestamp = gameScores.map(entry => ({
+            score: entry.score,
+            timestamp: entry.timestamp // Assuming timestamp is stored as 'timestamp' field
+        }));
 
-        if (scores.length === 0) {
+        if (scoresWithTimestamp.length === 0) {
             console.log(`No history found for ${game}, skipping...`);
             continue; // Skip empty games
         }
 
-        maxScores = Math.max(maxScores, scores.length);
-        gameDataArray.push({ game, scores, bestScore });
+        // Calculate Average Score
+        const averageScore = (scoresWithTimestamp.reduce((sum, entry) => sum + entry.score, 0) / scoresWithTimestamp.length).toFixed(2);
+
+        maxScores = Math.max(maxScores, scoresWithTimestamp.length);
+        gameDataArray.push({ game, scoresWithTimestamp, bestScore, averageScore });
     }
 
     if (gameDataArray.length === 0) {
@@ -78,20 +88,93 @@ function populateGameTable(games) {
         headerRow.innerHTML += `<th>Score ${i}</th>`;
     }
     headerRow.innerHTML += `<th>Best Score</th>`; // Add Best Score column
+    headerRow.innerHTML += `<th>Average Score</th>`; // Add Average Score column
 
-    // Populate table rows
-    gameDataArray.forEach(({ game, scores, bestScore }) => {
+    // Populate table rows on data received
+    gameDataArray.forEach(({ game, scoresWithTimestamp, bestScore, averageScore }) => {
         let rowHtml = `<tr><td>${game}</td>`;
 
         for (let i = 0; i < maxScores; i++) {
-            rowHtml += `<td>${scores[i] !== undefined ? scores[i] : ""}</td>`;
+            const score = scoresWithTimestamp[i];
+            const scoreValue = score ? score.score : "";
+            const timestamp = score ? score.timestamp : "";
+
+            // Add the timestamp to the hover using a tooltip
+            rowHtml += `<td data-timestamp="${timestamp}" class="score-cell">${scoreValue}</td>`;
         }
-        
-        rowHtml += `<td><strong>${bestScore}</strong></td>`; // Best Score column
+
+        rowHtml += `<td><strong>${bestScore}</strong></td>`;
+        rowHtml += `<td><strong>${averageScore}</strong></td>`;
         rowHtml += "</tr>";
 
         tableBody.innerHTML += rowHtml;
     });
+
+
+
+
+    // Tooltip element learned from: https://www.geeksforgeeks.org/how-to-add-a-tooltip-to-a-div-using-javascript/
+    const tooltip = document.createElement("div");
+    tooltip.style.position = "absolute";
+    tooltip.style.padding = "6px 10px";
+    tooltip.style.background = "rgba(0, 0, 0, 0.8)";
+    tooltip.style.color = "white";
+    tooltip.style.borderRadius = "5px";
+    tooltip.style.fontSize = "18px";
+    tooltip.style.pointerEvents = "none";
+    tooltip.style.opacity = "0";
+    tooltip.style.transition = "opacity 0.2s ease-in-out";
+    document.body.appendChild(tooltip);
+
+    const scoreCells = document.querySelectorAll(".score-cell");
+
+    scoreCells.forEach(cell => {
+        cell.addEventListener("mouseenter", function (event) {
+            const timestamp = cell.getAttribute("data-timestamp");
+
+             //Because of my silliness of storing timestamp as string it has to be parsed first before displaying
+            if (timestamp) {
+                // Regex from StackOverflow
+                const timestampRegex = /^(\d{2}):(\d{2}) (\d{2})\/(\d{2})\/(\d{4})$/;
+                const match = timestamp.match(timestampRegex);
+
+                if (match) {
+                    const [, hours, minutes, day, month, year] = match.map(num => parseInt(num));
+                    const date = new Date(year, month - 1, day, hours, minutes);
+
+                    // Format without seconds
+                    const formattedTimestamp = date.toLocaleString(undefined, { 
+                        hour: "2-digit", 
+                        minute: "2-digit", 
+                        day: "2-digit", 
+                        month: "2-digit", 
+                        year: "numeric" 
+                    });
+
+                    // Display tooltip on hover
+                    tooltip.textContent = `Timestamp: ${formattedTimestamp}`;
+                    tooltip.style.opacity = "1";
+                    tooltip.style.left = `${event.pageX + 10}px`; // Position near cursor so its visible and not under mouse
+                    tooltip.style.top = `${event.pageY + 10}px`;
+                } else {
+                    console.warn("Invalid timestamp format:", timestamp);
+                }
+            }
+        });
+
+        cell.addEventListener("mousemove", function (event) {
+            // Update tooltip position dynamically as the mouse moves
+            tooltip.style.left = `${event.pageX + 10}px`;
+            tooltip.style.top = `${event.pageY + 10}px`;
+        });
+
+        cell.addEventListener("mouseleave", function () {
+            tooltip.style.opacity = "0"; // Hide tooltip when not in hover mode
+        });
+    });
+
+
+
 }
 
 // LOAD REAL USER GAME DATA WHEN THE PAGE LOADS 
