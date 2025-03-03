@@ -7,7 +7,9 @@
 <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
 <link rel="stylesheet" href="universal.css">
 <style>
-  /* Banner Styling */
+
+
+
   .banner {
     width: 100%;
     background-color: rgb(121, 68, 173);
@@ -22,8 +24,16 @@
   }
 
   .banner h1 {
-    font-size: 5em;
+    font-size: 2.5em;
+    margin: 0;
   }
+  
+
+  .banner p {
+  font-size: 1.2em;
+  margin-top: 5px;
+  color: white;
+}
 
   body:not(.light-mode) .banner {
     background-color: rgb(29, 29, 29);
@@ -95,6 +105,85 @@
   body:not(.light-mode) .game-row:hover {
     background-color: #666;
   }
+
+
+
+  @media screen and (max-width: 480px)
+  {
+
+    .banner-content h1 {
+    font-size: 2em; 
+  }
+
+  .banner-content p {
+    font-size: 1em; 
+  }
+
+
+  .game-row span {
+    font-size: 1.5em;;
+  }
+
+  .game-row p {
+    font-size: 1em;
+  }
+
+  }
+
+
+
+
+  @media screen and (min-width: 1024px)
+  {
+
+    .banner-content h1 {
+    font-size: 4em; 
+  }
+
+  .banner-content p {
+    font-size: 1.5em; 
+  }
+
+
+
+  .game-row span {
+    font-size: 1.75em;;
+  }
+
+  .game-row p {
+    font-size: 1.25em;
+  }
+
+  }
+
+
+
+
+  @media screen and (min-width: 2024px) 
+  {
+
+    .banner-content h1 {
+    font-size: 5em; 
+  }
+
+  .banner-content p {
+    font-size: 2em; 
+  }
+
+
+  .game-row span {
+    font-size: 2.5em;;
+  }
+
+  .game-row p {
+    font-size: 1.75em;
+  }
+
+  }
+
+
+
+
 </style>
 </head>
 <body>
@@ -121,12 +210,18 @@
   </a>
 </div>
 
-<!-- Banner -->
+
+
 <div class="banner">
-  <h1>Games</h1>
+  <div class="banner-content">
+    <h1>Games</h1>
+    <p>These five games have been proven to increase cognition and reduce cognitive decline.</p>
+  </div>
 </div>
 
-<!-- Games List -->
+
+
+
 <div class="games-container">
   <a href="games/minesweeper/minesweeper.html" class="game-row">
     <div>

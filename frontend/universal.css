@@ -52,6 +52,7 @@ body.light-mode .navbar {
   padding: 1% 2.5%;
   text-decoration: none;
   transition: transform 0.2s;
+  font-size: 1.2em;
 }
 
 .navbar a:hover {
@@ -131,5 +132,77 @@ body.light-mode .content h1 {
 
   .navbar a {
       width: 100%;
+  }
+}
+
+
+
+@media screen and (max-width: 480px) {
+  .navbar a 
+  {
+    font-size: 1.1em;
+  }
+
+  .navbar-logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+
+  #themeIcon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .login-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+}
+
+
+
+
+@media screen and (min-width: 1024px) {
+  .navbar a 
+  {
+    font-size: 1.3em;
+  }
+  .navbar-logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  #themeIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .login-icon img {
+    width: 30px;
+    height: 30px;
+}
+
+}
+
+@media screen and (min-width: 2024px){
+  .navbar a 
+  {
+    font-size: 1.4em;
+  }
+  .navbar-logo img {
+    width: 55px;
+    height: 55px;
+  }
+
+  #themeIcon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .login-icon img {
+    width: 35px;
+    height: 35px;
   }
 }
