@@ -34,7 +34,7 @@
 
 
         body:not(.light-mode) .banner h1 {
-            color: black;
+            color: white;
         }
 
 
@@ -44,7 +44,7 @@
 
 
         body:not(.light-mode) .banner {
-            background-color: rgb(68, 68, 68); 
+            background-color: rgb(26, 26, 28);
         }
 
 
@@ -56,7 +56,8 @@
 
 
         .content-section {
-            margin-bottom: 3rem;
+            margin-bottom: 5rem;
+            text-align: left;
         }
 
         .subtitle {
@@ -89,21 +90,44 @@
             color: black;
         }
 
-        @media screen and (min-width: 256px) {
+
+
+        @media screen and (max-width: 480px) 
+        {
+            .banner {
+                height: 25vh;
+            }
+
+            .banner-logo img {
+                width: 120px; 
+                margin-right: 3%;
+            }
+
+            .banner h1 {
+                font-size: 2.5em; 
+            }
+
             .content {
-                padding-top: 145vh;
+                padding-top: 390vh;
             }
         }
+
+
+
+
 
         @media screen and (min-width: 1024px) {
             .content {
-                padding-top: 70vh;
+                padding-top: 80vh;
+                width: 65%;
             }
         }
 
+
         @media screen and (min-width: 2024px) {
             .content {
-                padding-top: 35vh;
+                padding-top: 50vh;
+                width: 55%;
             }
         }
     </style>
@@ -146,7 +170,7 @@
         <div class="content-section">
             <div class="subtitle">What is ReMind?</div>
             <div class="body-text">
-                ReMind is my final year project! It is a website dedicated to Human Memory Education. With this website I have taken the approach to "game-ify" memory education.
+                ReMind is my final year project! It is a website dedicated to human memory education. I have taken the approach of 'gamifying' memory education.
             </div>
         </div>
 
@@ -156,7 +180,7 @@
               <a href="signup.html">Create an Account</a>
           </div>
           <div class="body-text">
-            You can create an account by  <a href="signup.html">clicking here</a>. When you create an account your game scores will be scored onto your account.
+            You can create an account by  <a href="signup.html">clicking here</a>. When you create an account, your game scores will be saved.
             
           </div>
       </div>
@@ -168,7 +192,7 @@
                 <a href="learn.html">Learn</a>
             </div>
             <div class="body-text">
-                If you want to learn more about memory, how it is: created, compounded and lost, <a href="learn.html">click here</a>.
+                If you want to learn more about memory, how it is, created, compounded and lost, <a href="learn.html">click here</a>.
             </div>
         </div>
 
@@ -179,8 +203,8 @@
                 <a href="games.html">Games</a>
             </div>
             <div class="body-text">
-                This website is about making cognitive excercise fun. I have curated 5 games which have been shown to improve cognition and prevent cognitive decline.
-                The history of your game results can be seen by clicking the "Game History" button after signing in.
+                This website is about making cognitive exercise fun. I have curated five games which have been shown to improve cognition and prevent cognitive decline.
+                You can view your game history by clicking the 'Game History' button after signing in.
             </div>
         </div>
 
@@ -191,7 +215,7 @@
               <a href="facts.html">Facts</a>
           </div>
           <div class="body-text">
-            If you want to learn more visit the facts page, where you can learn a new fact at the click of a button!
+            If you want to learn more, visit the facts page, where you can discover a new fact with the click of a button!
           </div>
       </div>
 
@@ -201,7 +225,7 @@
             <a>Light & Dark Mode</a>
         </div>
         <div class="body-text">
-          If you want to make things darker, you can click the Moon in the top right corner to enable dark mode, simply click the sun to enable light mode.
+            To switch themes, click the moon icon in the top right corner for dark mode, or the sun icon to switch to light mode."
         </div>
     </div>
 
