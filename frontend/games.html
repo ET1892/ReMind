@@ -7,12 +7,45 @@
 <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
 <link rel="stylesheet" href="universal.css">
 <style>
+  /* Banner Styling */
+  .banner {
+    width: 100%;
+    background-color: rgb(121, 68, 173);
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .banner h1 {
+    font-size: 5em;
+  }
+
+  body:not(.light-mode) .banner {
+    background-color: rgb(29, 29, 29);
+  }
+
+  body:not(.light-mode) .banner h1 {
+    color: white;
+  }
+
+  body.light-mode .banner h1 {
+    color: white;
+  }
+
   .games-container {
-    margin-top: 80px;
+
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 20px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .game-row {
@@ -20,23 +53,24 @@
     align-items: center;
     justify-content: space-between;
     background-color: #dfdfdf;
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    height: 80px;
+    min-height: 70px;
     text-decoration: none;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    flex-wrap: wrap; 
   }
 
   .game-row span {
-    font-size: 20px;
+    font-size: 1.5em;;
     font-weight: bold;
     color: #000;
     flex: 1;
   }
 
   .game-row p {
-    font-size: 16px;
+    font-size: 1em;
     color: #000;
     flex: 2;
     text-align: right;
@@ -46,21 +80,22 @@
   .game-row:hover {
     background-color: #aaaaaa;
     cursor: pointer;
-    color: #fff;
-    transition: all 0.5s ease;
   }
 
-  /*
-
-  .game-row:hover span,
-  .game-row:hover p {
-    color: #ffffff; /* Change text color to white for contrast on hover
+  body:not(.light-mode) .game-row {
+    background-color: #444;
+    color: white;
   }
-*/
-  
 
+  body:not(.light-mode) .game-row span,
+  body:not(.light-mode) .game-row p {
+    color: white;
+  }
+
+  body:not(.light-mode) .game-row:hover {
+    background-color: #666;
+  }
 </style>
-
 </head>
 <body>
 
@@ -86,6 +121,12 @@
   </a>
 </div>
 
+<!-- Banner -->
+<div class="banner">
+  <h1>Games</h1>
+</div>
+
+<!-- Games List -->
 <div class="games-container">
   <a href="games/minesweeper/minesweeper.html" class="game-row">
     <div>
@@ -105,7 +146,7 @@
     <div>
       <span>Sudoku</span>
     </div>
-    <p>Fill the remaining 9x9 grid with numbers 1 to 9, there is no repeated numbers allowed in a square, row, or column</p>
+    <p>Fill the remaining 9x9 grid with numbers 1 to 9, no repeated numbers allowed in a square, row, or column</p>
   </a>
 
   <a href="games/recall/recall.html" class="game-row">
@@ -129,6 +170,7 @@
   const body = document.body;
 
   if (localStorage.getItem('theme') === 'dark') {
+    body.classList.remove('light-mode');
     themeIcon.src = 'logo/sun-icon.svg';
   } else {
     body.classList.add('light-mode');
