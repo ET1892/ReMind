@@ -180,41 +180,40 @@
 
 
 <script>
-
-  //script for account creation, password regex and api post to make an object for this user 
+  //script for account creation, password regex, and API post to make an object for this user 
   document.getElementById("signupForm").addEventListener("submit", async function (event) {
       event.preventDefault();
-  
+
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const messageContainer = document.getElementById("messageContainer");
+      const signupButton = document.querySelector("button[type='submit']");
   
       messageContainer.innerHTML = ""; // Clear messages
-  
+
       if (!email || !password) {
           messageContainer.innerHTML = '<div class="error">Email and password are required.</div>';
           return;
       }
-  
 
-
-      //regex to make sure theres at least: one uppercase and 2 numbers also 8 chars long at least
+      //regex to make sure there's at least: one uppercase and 2 numbers also 8 chars long at least
       if (!password.match(/^(?=.*[A-Z])(?=.*\d.*\d).{8,}$/)) {
-    messageContainer.innerHTML = '<div class="error">Password must be at least 8 characters long, contain at least 1 capital letter and at least 2 numbers.</div>';
-    return;
-}
+          messageContainer.innerHTML = '<div class="error">Password must be at least 8 characters long, contain at least 1 capital letter and at least 2 numbers.</div>';
+          return;
+      }
 
+      // Disable the signup button to prevent spamming clicks
+      signupButton.disabled = true;
 
-  
       try {
           const response = await fetch("https://fyp-60ev.onrender.com/signup", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email, password })
           });
-  
+
           const data = await response.json();
-  
+
           if (response.ok) {
               messageContainer.innerHTML = '<div class="message">Signup successful! Redirecting...</div>';
               setTimeout(() => window.location.href = "login.html", 1000);
@@ -223,10 +222,13 @@
           }
       } catch (error) {
           messageContainer.innerHTML = '<div class="error">Error signing up. Please try again.</div>';
+      } finally {
+          // Re-enable the signup button after the request completes to prevent spamming sign up
+          signupButton.disabled = false;
       }
   });
-  
 </script>
+
 
 </body>
 </html>

@@ -124,7 +124,7 @@ const saveGameScore = (uid, game, score) => {
 
 
 
-const initGame = (remainingTime = 45) => { //change back to 45 when done from testing
+const initGame = (remainingTime = 60) => { //change back to 60 when done from testing
     if (questionCount === 10) { //change back to 10 when done testing 
         winGame();
         return;
