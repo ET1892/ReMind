@@ -1,104 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn</title>
-    <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
-    <link rel="stylesheet" href="universal.css">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn</title>
+<link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
+<link rel="stylesheet" href="universal.css">
+<style>
 
-        .banner {
-            width: 100%;
-            background-color: rgb(121, 68, 173);
-            color: white;
-            text-align: center;
-            margin-top: 40px;
-            height: 25vh;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: center;
+
+
+  .banner {
+    width: 100%;
+    background-color: rgb(121, 68, 173);
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+
+  .banner-logo img {
+            width: 190px;
+            height: auto;
+            margin-right: 5%;
         }
 
-        .banner h1 {
-            font-size: 5em;
-        }
+  .banner h1 {
+    font-size: 5em;
+    margin: 0;
+  }
+  
 
+  .banner p {
+  font-size: 1.2em;
+  margin-top: 5px;
+  color: white;
+}
 
-        body:not(.light-mode) .banner h1 {
-            color: white;
-        }
+  body:not(.light-mode) .banner {
+    background-color: rgb(29, 29, 29);
+  }
 
+  body:not(.light-mode) .banner h1 {
+    color: white;
+  }
 
-        body.light-mode .banner h1 {
-            color: white;
-        }
+  body.light-mode .banner h1 {
+    color: white;
+  }
 
-
-        body:not(.light-mode) .banner {
-          background-color: rgb(29, 29, 29);
-        }
-
-
-        .content {
-            width: 80%;
-            max-width: 10000px;
-            margin: 0 auto;
-            padding-top: 120vh;
-            padding-bottom: 2rem;
-        }
-
-
-        .content-section {
-            margin-bottom: 5rem;
-            text-align: left;
-        }
-
-        .subtitle {
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .body-text {
-            font-size: .5em;
-            color: #666;
-            line-height: 1.6;
-        }
-
-
-        body {
-            overflow-y: scroll;
-            margin: 0;
-            padding: 0;
-        }
-
-
-        body:not(.light-mode) .content .subtitle,
-        body:not(.light-mode) .content .body-text {
-            color: white;
-        }
-
-        body.light-mode .content .subtitle,
-        body.light-mode .content .body-text {
-            color: black;
-        }
-
-
-
-
-        @media screen and (max-width: 480px) 
 
 
         
-        {
-          .banner {
+
+  .games-container {
+    width: 75%;
+    padding-bottom: 1rem;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-section {
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.subtitle {
+    font-size: 2.75em;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.body-text {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+body:not(.light-mode) .subtitle,
+body:not(.light-mode) .body-text {
+    color: white;
+}
+
+body.light-mode .subtitle,
+body.light-mode .body-text {
+    color: black;
+}
+
+
+
+
+
+
+
+  .game-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    min-height: 70px;
+    text-decoration: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    flex-wrap: wrap; 
+  }
+
+  .game-row span {
+    font-size: 1.5em;;
+    font-weight: bold;
+    color: #000;
+    flex: 1;
+  }
+
+  .game-row p {
+    font-size: 1em;
+    color: #000;
+    flex: 2;
+    text-align: right;
+    margin-left: 20px;
+  }
+
+
+
+
+
+  body:not(.light-mode) .game-row span,
+  body:not(.light-mode) .game-row p {
+    color: white;
+  }
+
+
+
+  @media screen and (max-width: 480px)
+  {
+
+    .banner {
                 height: 175px;
             }
 
-            .banner-logo img {
+    .banner-content h1 {
+    font-size: 2em; 
+  }
+
+  .banner-content p {
+    font-size: 1em; 
+  }
+
+
+  .game-row span {
+    font-size: 1.5em;;
+  }
+
+  .game-row p {
+    font-size: 1em;
+  }
+
+  .games-container {
+        width: 90%;
+    }
+    
+    .subtitle {
+        font-size: 2.25em;
+    }
+
+    .body-text {
+        font-size: 1.25em;
+    }
+
+    .banner-logo img {
                 width: 120px; 
                 margin-right: 3%;
             }
@@ -107,83 +181,142 @@
                 font-size: 2.5em; 
             }
 
-            .content {
-                padding-top: 1620vh;
-                width: 85%;
-            }
-
-
-            
-        }
+  }
 
 
 
-        @media screen and (min-width: 1024px) {
 
-          .banner {
+  @media screen and (min-width: 1024px)
+  {
+
+
+    .banner {
                 height: 300px;
             }
-            .content {
-                padding-top: 385vh;
-                width: 65%;
-            }
-        }
 
-        
-        @media screen and (min-width: 2024px) {
+    .banner-content h1 {
+    font-size: 4em; 
+  }
 
-          .banner {
+  .banner-content p {
+    font-size: 1.5em; 
+  }
+
+  .games-container {
+        width: 65%;
+    }
+    
+    .subtitle {
+        font-size: 3em;
+    }
+
+    .body-text {
+        font-size: 1.5em;
+    }
+
+
+
+  .game-row span {
+    font-size: 1.75em;;
+  }
+
+  .game-row p {
+    font-size: 1.25em;
+  }
+
+  }
+
+
+
+
+  @media screen and (min-width: 2024px) 
+  {
+
+    .banner {
                 height: 350px;
             }
-            .content {
-                padding-top: 270vh;
-                width: 55%;
-            }
-        }
-    </style>
+
+    .banner-content h1 {
+    font-size: 5em; 
+  }
+
+  .banner-content p {
+    font-size: 2em; 
+  }
+
+
+  .game-row span {
+    font-size: 2.5em;;
+  }
+
+  .game-row p {
+    font-size: 1.75em;
+  }
+
+  .games-container {
+        width: 55%;
+    }
+
+    .subtitle {
+        font-size: 3.5em;
+    }
+
+    .body-text {
+        font-size: 1.75em;
+    }
+
+  }
+
+
+
+
+</style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-logo">
-            <a href="home.html">
-                <img src="logo/logo.svg" alt="Logo" width="40" height="40">
-            </a>
-        </div>
 
-        
-        <div class="navbar-links">
-            <a href="learn.html" class="active">Learn</a>
-            <a href="games.html">Games</a>
-            <a href="facts.html">Facts</a>
-        </div>
-        <!-- Light/Dark mode toggle button in the navbar -->
-        <button class="theme-toggle" id="themeToggle">
-            <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
-        </button>
-        <!-- Login Icon placed on the rightmost side -->
-        <a href="login.html" class="login-icon">
-            <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
-        </a>
-    </div>
-
-
-    <div class="banner">
-      <h1>What is Memory?</h1>
+<div class="navbar">
+  <div class="navbar-logo">
+    <a href="home.html">
+      <img src="logo/logo.svg" alt="Logo" width="40" height="40">
+    </a>
   </div>
 
+  <div class="navbar-links">
+    <a href="learn.html" class="active">Learn</a>
+    <a href="games.html">Games</a>
+    <a href="facts.html">Facts</a>
+  </div>
 
-  <div class="content">
+  <button class="theme-toggle" id="themeToggle">
+    <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
+  </button>
+
+  <a href="login.html" class="login-icon">
+    <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
+  </a>
+</div>
+
+
+
+<div class="banner">
+    <div class="banner-logo">
+    </div>
+    <h1>What is Memory?</h1>
+</div>
+
+
+
+
+<div class="games-container">
     <div class="content-section">
         <div class="subtitle">Memory</div>
         <div class="body-text">
-          <ul>
-              <li>Is the process by which our brains encode, store, and retrieve information.</li>
-              <li>Allows us to recall past experiences, recognise faces, solve problems, and make decisions.</li>
-              <li>Without memory, learning would be impossible, and we would have no sense of self.</li>
-          </ul>
-      </div>
-      
+                <li>Is the process by which our brains encode, store, and retrieve information.</li>
+                <li>Allows us to recall past experiences, recognise faces, solve problems, and make decisions.</li>
+                <li>Without memory, learning would be impossible, and we would have no sense of self.</li>
+        </div>
     </div>
+
 
     <div class="content-section">
         <div class="subtitle">The Three Stages of Memory</div>
@@ -206,6 +339,8 @@
         </div>
     </div>
 
+
+
     <div class="content-section">
         <div class="subtitle">Types of Memory</div>
         <div class="body-text">
@@ -225,12 +360,14 @@
         </div>
     </div>
 
+
+
     <div class="content-section">
         <div class="subtitle">Working Memory</div>
         <div class="body-text">
           <li>Working memory is a part of short term memory that actively processes and manipulates information.</li>
           <li>It’s like a mental workspace where we hold and use data/memories for problem solving, reasoning, and learning. 
-            <li>For example: what is 6 x 7, relies on working memory.</li>
+            <li>For example: "What is 6 x 7?", relies on working memory.</li>
         </div>
     </div>
 
@@ -244,6 +381,7 @@
                 Riding a bike or playing a musical instrument are examples of Procedural Memory.
         </div>
     </div>
+
 
     <div class="content-section">
         <div class="subtitle">How the Brain Stores Memories</div>
@@ -264,7 +402,7 @@
         <div class="body-text">
                 <li><strong>Decay</strong> – Memories fade if not used over time.</li>
                 <li><strong>Interference</strong> – New or similar information can replace or disrupt old memories.</li>
-                <li><strong>Retrieval Failure</strong> – Sometimes information is stored but difficult to access: "it's at the tip of my tongue!"</li>
+                <li><strong>Retrieval Failure</strong> – Sometimes information is stored but difficult to access: "It's at the tip of my tongue!"</li>
         </div>
     </div>
 
@@ -327,31 +465,33 @@
     </div>
 </div>
 
+  
 
+<script>
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const body = document.body;
 
-    </div>
-    <script>
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const body = document.body;
-        // Load theme preference from localStorage or default to light mode if no preference is set
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.remove('light-mode');
-            themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-        } else {
-            body.classList.add('light-mode');
-            themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-        }
-        themeToggleBtn.addEventListener('click', function () {
-            body.classList.toggle('light-mode');
-            if (body.classList.contains('light-mode')) {
-                themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.remove('light-mode');
+    themeIcon.src = 'logo/sun-icon.svg';
+  } else {
+    body.classList.add('light-mode');
+    themeIcon.src = 'logo/moon-icon.svg';
+  }
+
+  themeToggleBtn.addEventListener('click', function () {
+    body.classList.toggle('light-mode');
+
+    if (body.classList.contains('light-mode')) {
+      themeIcon.src = 'logo/moon-icon.svg';
+      localStorage.setItem('theme', 'light'); 
+    } else {
+      themeIcon.src = 'logo/sun-icon.svg';
+      localStorage.setItem('theme', 'dark'); 
+    }
+  });
+</script>
+
 </body>
 </html>

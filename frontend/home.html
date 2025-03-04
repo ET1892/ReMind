@@ -1,104 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
-    <link rel="stylesheet" href="universal.css">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+<link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
+<link rel="stylesheet" href="universal.css">
+<style>
 
-        .banner {
-            width: 100%;
-            background-color: rgb(121, 68, 173);
-            color: white;
-            text-align: center;
-            margin-top: 40px;
-            transition: background-color 0.3s, color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: center;
-        }
 
-        .banner-logo img {
+
+  .banner {
+    width: 100%;
+    background-color: rgb(121, 68, 173);
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+
+  .banner-logo img {
             width: 190px;
             height: auto;
             margin-right: 5%;
         }
 
-        .banner h1 {
-            font-size: 5em;
-        }
+  .banner h1 {
+    font-size: 5em;
+    margin: 0;
+  }
+  
 
+  .banner p {
+  font-size: 1.2em;
+  margin-top: 5px;
+  color: white;
+}
 
-        body:not(.light-mode) .banner h1 {
-            color: white;
-        }
+  body:not(.light-mode) .banner {
+    background-color: rgb(29, 29, 29);
+  }
 
+  body:not(.light-mode) .banner h1 {
+    color: white;
+  }
 
-        body.light-mode .banner h1 {
-            color: white;
-        }
-
-
-        body:not(.light-mode) .banner {
-            background-color: rgb(29, 29, 29);
-        }
-
-
-        .content {
-            width: 75%;
-            padding-top: 120vh;
-            padding-bottom: 2rem;
-            margin-top: 50px;
-        }
-
-
-        .content-section {
-            margin-bottom: 5rem;
-            text-align: left;
-        }
-
-        .subtitle {
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        .body-text {
-            font-size: .5em;
-            color: #666;
-            line-height: 1.6;
-        }
-
-
-        body {
-            overflow-y: scroll;
-            margin: 0;
-            padding: 0;
-        }
-
-
-        body:not(.light-mode) .content .subtitle,
-        body:not(.light-mode) .content .body-text {
-            color: white;
-        }
-
-        body.light-mode .content .subtitle,
-        body.light-mode .content .body-text {
-            color: black;
-        }
+  body.light-mode .banner h1 {
+    color: white;
+  }
 
 
 
-        @media screen and (max-width: 480px) 
-        {
-            .banner {
+        
+
+  .games-container {
+    width: 75%;
+    padding-bottom: 1rem;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-section {
+    margin-bottom: 3rem;
+    text-align: left;
+}
+
+.subtitle {
+    font-size: 2.75em;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.body-text {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+body:not(.light-mode) .subtitle,
+body:not(.light-mode) .body-text {
+    color: white;
+}
+
+body.light-mode .subtitle,
+body.light-mode .body-text {
+    color: black;
+}
+
+
+
+
+
+
+
+  .game-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    min-height: 70px;
+    text-decoration: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    flex-wrap: wrap; 
+  }
+
+  .game-row span {
+    font-size: 1.5em;;
+    font-weight: bold;
+    color: #000;
+    flex: 1;
+  }
+
+  .game-row p {
+    font-size: 1em;
+    color: #000;
+    flex: 2;
+    text-align: right;
+    margin-left: 20px;
+  }
+
+
+
+
+
+  body:not(.light-mode) .game-row span,
+  body:not(.light-mode) .game-row p {
+    color: white;
+  }
+
+
+
+  @media screen and (max-width: 480px)
+  {
+
+    .banner {
                 height: 175px;
             }
 
-            .banner-logo img {
+    .banner-content h1 {
+    font-size: 2em; 
+  }
+
+  .banner-content p {
+    font-size: 1em; 
+  }
+
+
+  .game-row span {
+    font-size: 1.5em;;
+  }
+
+  .game-row p {
+    font-size: 1em;
+  }
+
+  .games-container {
+        width: 90%;
+    }
+    
+    .subtitle {
+        font-size: 2.25em;
+    }
+
+    .body-text {
+        font-size: 1.25em;
+    }
+
+    .banner-logo img {
                 width: 120px; 
                 margin-right: 3%;
             }
@@ -107,164 +181,213 @@
                 font-size: 2.5em; 
             }
 
-            .content {
-                padding-top: 375vh;
-            }
-        }
+  }
 
 
 
 
+  @media screen and (min-width: 1024px)
+  {
 
-        @media screen and (min-width: 1024px) {
 
-            .banner {
+    .banner {
                 height: 300px;
             }
-            .content {
-                padding-top: 75vh;
-                width: 65%;
-            }
-        }
+
+    .banner-content h1 {
+    font-size: 4em; 
+  }
+
+  .banner-content p {
+    font-size: 1.5em; 
+  }
+
+  .games-container {
+        width: 65%;
+    }
+    
+    .subtitle {
+        font-size: 3em;
+    }
+
+    .body-text {
+        font-size: 1.5em;
+    }
 
 
-        @media screen and (min-width: 2024px) {
+
+  .game-row span {
+    font-size: 1.75em;;
+  }
+
+  .game-row p {
+    font-size: 1.25em;
+  }
+
+  }
 
 
-            .banner {
+
+
+  @media screen and (min-width: 2024px) 
+  {
+
+    .banner {
                 height: 350px;
             }
 
-            .content {
-                padding-top: 50vh;
-                width: 55%;
-            }
-        }
+    .banner-content h1 {
+    font-size: 5em; 
+  }
 
-        
-    </style>
+  .banner-content p {
+    font-size: 2em; 
+  }
+
+
+  .game-row span {
+    font-size: 2.5em;;
+  }
+
+  .game-row p {
+    font-size: 1.75em;
+  }
+
+  .games-container {
+        width: 55%;
+    }
+
+    .subtitle {
+        font-size: 3.5em;
+    }
+
+    .body-text {
+        font-size: 1.75em;
+    }
+
+  }
+
+
+
+
+</style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-logo">
-            <a href="home.html">
-                <img src="logo/logo.svg" alt="Logo" width="40" height="40">
-            </a>
-        </div>
 
-        
-        <div class="navbar-links">
-            <a href="learn.html">Learn</a>
-            <a href="games.html">Games</a>
-            <a href="facts.html">Facts</a>
-        </div>
-        <!-- Light/Dark mode toggle button in the navbar -->
-        <button class="theme-toggle" id="themeToggle">
-            <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
-        </button>
-        <!-- Login Icon placed on the rightmost side -->
-        <a href="login.html" class="login-icon">
-            <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
-        </a>
+<div class="navbar">
+  <div class="navbar-logo">
+    <a href="home.html">
+      <img src="logo/logo.svg" alt="Logo" width="40" height="40">
+    </a>
+  </div>
+
+  <div class="navbar-links">
+    <a href="learn.html">Learn</a>
+    <a href="games.html">Games</a>
+    <a href="facts.html">Facts</a>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle">
+    <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
+  </button>
+
+  <a href="login.html" class="login-icon">
+    <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
+  </a>
+</div>
+
+
+
+<div class="banner">
+    <div class="banner-logo">
+        <img src="logo/logo.svg" alt="Logo">
     </div>
-    <!-- Banner Section -->
-    <div class="banner">
-        <!-- Logo inside the banner, centered -->
-        <div class="banner-logo">
-            <img src="logo/logo.svg" alt="Logo">
+    <h1>ReMind</h1>
+</div>
+
+
+
+
+<div class="games-container">
+    <div class="content-section">
+        <div class="subtitle">What is ReMind?</div>
+        <div class="body-text">
+            ReMind is my final year project! It is a website dedicated to human memory education. I have taken the approach of 'gamifying' memory education.
         </div>
-        <h1>ReMind</h1>
     </div>
 
-
-
-    <div class="content">
-        <div class="content-section">
-            <div class="subtitle">What is ReMind?</div>
-            <div class="body-text">
-                ReMind is my final year project! It is a website dedicated to human memory education. I have taken the approach of 'gamifying' memory education.
-            </div>
-        </div>
-
-
-        <div class="content-section">
-          <div class="subtitle">
-              <a href="signup.html">Create an Account</a>
-          </div>
-          <div class="body-text">
-            You can create an account by  <a href="signup.html">clicking here</a>. When you create an account, your game scores will be saved.
-            
-          </div>
-      </div>
-
-
-
-        <div class="content-section">
-            <div class="subtitle">
-                <a href="learn.html">Learn</a>
-            </div>
-            <div class="body-text">
-                If you want to learn more about memory, how it is, created, compounded and lost, <a href="learn.html">click here</a>.
-            </div>
-        </div>
-
-
-
-        <div class="content-section">
-            <div class="subtitle">
-                <a href="games.html">Games</a>
-            </div>
-            <div class="body-text">
-                This website is about making cognitive exercise fun. I have curated five games which have been shown to improve cognition and prevent cognitive decline.
-                You can view your game history by clicking the 'Game History' button after signing in.
-            </div>
-        </div>
-
-
-
-        <div class="content-section">
-          <div class="subtitle">
-              <a href="facts.html">Facts</a>
-          </div>
-          <div class="body-text">
-            If you want to learn more, visit the facts page, where you can discover a new fact with the click of a button!
-          </div>
-      </div>
-
-
-      <div class="content-section">
+    <div class="content-section">
         <div class="subtitle">
-            <a>Light & Dark Mode</a>
+            <a href="signup.html">Create an Account</a>
         </div>
         <div class="body-text">
-            To switch themes, click the moon icon in the top right corner for dark mode, or the sun icon to switch to light mode."
+            You can create an account by <a href="signup.html">clicking here</a>. When you create an account, your game scores will be saved.
         </div>
     </div>
 
-
+    <div class="content-section">
+        <div class="subtitle">
+            <a href="learn.html">Learn</a>
+        </div>
+        <div class="body-text">
+            If you want to learn more about memory, how it is created, compounded, and lost, <a href="learn.html">click here</a>.
+        </div>
     </div>
-    <script>
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const body = document.body;
-        // Load theme preference from localStorage or default to light mode if no preference is set
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.remove('light-mode');
-            themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-        } else {
-            body.classList.add('light-mode');
-            themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-        }
-        themeToggleBtn.addEventListener('click', function () {
-            body.classList.toggle('light-mode');
-            if (body.classList.contains('light-mode')) {
-                themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-    </script>
+
+    <div class="content-section">
+        <div class="subtitle">
+            <a href="games.html">Games</a>
+        </div>
+        <div class="body-text">
+            This website is about making cognitive exercise fun. I have curated five games that have been shown to improve cognition and prevent cognitive decline.
+            You can view your game history by clicking the 'Game History' button after signing in.
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="subtitle">
+            <a href="facts.html">Facts</a>
+        </div>
+        <div class="body-text">
+            If you want to learn more, visit the facts page, where you can discover a new fact with the click of a button!
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="subtitle">Light & Dark Mode</div>
+        <div class="body-text">
+            To switch themes, click the moon icon in the top right corner for dark mode, or the sun icon to switch to light mode.
+        </div>
+    </div>
+</div>
+
+  
+
+<script>
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const body = document.body;
+
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.remove('light-mode');
+    themeIcon.src = 'logo/sun-icon.svg';
+  } else {
+    body.classList.add('light-mode');
+    themeIcon.src = 'logo/moon-icon.svg';
+  }
+
+  themeToggleBtn.addEventListener('click', function () {
+    body.classList.toggle('light-mode');
+
+    if (body.classList.contains('light-mode')) {
+      themeIcon.src = 'logo/moon-icon.svg';
+      localStorage.setItem('theme', 'light'); 
+    } else {
+      themeIcon.src = 'logo/sun-icon.svg';
+      localStorage.setItem('theme', 'dark'); 
+    }
+  });
+</script>
+
 </body>
 </html>
