@@ -196,10 +196,15 @@
           return;
       }
   
-      if (password.length < 6) {
-          messageContainer.innerHTML = '<div class="error">Password must be at least 6 characters long.</div>';
-          return;
-      }
+
+
+      //regex to make sure theres at least: one uppercase and 2 numbers also 8 chars long at least
+      if (!password.match(/^(?=.*[A-Z])(?=.*\d.*\d).{8,}$/)) {
+    messageContainer.innerHTML = '<div class="error">Password must be at least 8 characters long, contain at least 1 capital letter and at least 2 numbers.</div>';
+    return;
+}
+
+
   
       try {
           const response = await fetch("http://localhost:3001/signup", {

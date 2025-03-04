@@ -19,6 +19,7 @@ const facts = [
     "Research suggests that physical exercise can enhance brain function and improve memory.",
     "The brain's default mode network is most active when you're at rest and daydreaming, allowing your mind to wander.",
     "Your brain's ability to reorganise itself by forming new neural connections is known as neuroplasticity.",
+    
     "The 'working memory' system of your brain allows you to hold and manipulate information temporarily for cognitive tasks such as reasoning and comprehension.",
     "The brain's processing power is limited; it can only focus on a small number of things at once.",
     "The blood-brain barrier is a selective barrier that protects the brain from harmful substances in the bloodstream, while allowing essential nutrients to pass through.",
@@ -47,7 +48,7 @@ const facts = [
     "Increased levels of the hormone cortisol, which is produced during stress, can impair your ability to form and recall memories.",
     "The brain is more adaptable to changes in youth, but the concept of neuroplasticity allows even older adults to form new neural connections.",
     "The emotional part of your brain, known as the limbic system, helps to store emotionally charged memories, often making them easier to recall.",
-    
+
     "Memory loss, especially in older adults, can be a result of both biological aging and lifestyle factors like lack of mental stimulation or physical activity.",
     "The process of forgetting, while frustrating, is actually a healthy function of the brain, as it helps to declutter unnecessary or irrelevant information.",
     "Research indicates that the brain may store memories in a way that is more akin to a web of interconnected concepts rather than isolated events.",
