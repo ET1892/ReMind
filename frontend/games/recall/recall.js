@@ -126,7 +126,7 @@
         saveGameScore: function (uid, game, score) {
             const lowerIsBetter = game === "recall"; // ensures that the lowerisbetter funciton is set to true, as less clicks a higher score in this game
         
-            fetch("http://localhost:3001/update-score", {
+            fetch("https://fyp-60ev.onrender.com/update-score", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ uid, game, score, lowerIsBetter }), // sends lower is better with api fetch to make sure it knows before sending

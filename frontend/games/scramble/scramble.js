@@ -101,7 +101,7 @@ const winGame = () => {
 const saveGameScore = (uid, game, score) => {
     const lowerIsBetter = false; // lower score set to false as highere score is really better for thsi game 
 
-    fetch("http://localhost:3001/update-score", {
+    fetch("https://fyp-60ev.onrender.com/update-score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid, game, score, lowerIsBetter }), // Sends the score to the backend

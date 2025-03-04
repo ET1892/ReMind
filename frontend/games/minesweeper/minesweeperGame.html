@@ -192,7 +192,7 @@
 
 // Function to send score to API
 function saveGameScore(uid, game, score, lowerIsBetter) {
-    fetch("http://localhost:3001/update-score", {
+    fetch("https://fyp-60ev.onrender.com/update-score", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid, game, score, lowerIsBetter }), // Sends score to backend

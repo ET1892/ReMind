@@ -1379,7 +1379,7 @@ _sendScoreToAPI() {
   const finalScore = this.score;  //final score value
 
   // send score to backend
-  fetch("http://localhost:3001/update-score", {
+  fetch("https://fyp-60ev.onrender.com/update-score", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
