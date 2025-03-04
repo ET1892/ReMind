@@ -6,6 +6,298 @@
 <title>Facts</title>
 <link rel="shortcut icon" type="image/x-icon" href="logo/favicon.ico">
 <link rel="stylesheet" href="universal.css">
+<style>
+  .banner {
+    width: 100%;
+    background-color: rgb(121, 68, 173);
+    color: white;
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .banner-logo img {
+    width: 190px;
+    height: auto;
+    margin-right: 5%;
+  }
+
+  .banner h1 {
+    font-size: 5em;
+    margin: 0;
+  }
+
+  .banner p {
+    font-size: 1.2em;
+    margin-top: 5px;
+    color: white;
+  }
+
+  body:not(.light-mode) .banner {
+    background-color: rgb(29, 29, 29);
+  }
+
+  body:not(.light-mode) .banner h1 {
+    color: white;
+  }
+
+  body.light-mode .banner h1 {
+    color: white;
+  }
+
+  .games-container {
+  width: 90%;
+  padding-bottom: 1rem;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+  .content-section {
+    margin-bottom: 3rem;
+    text-align: left;
+  }
+
+  .subtitle {
+    font-size: 2.75em;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+
+  .body-text {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  body:not(.light-mode) .subtitle,
+  body:not(.light-mode) .body-text {
+    color: white;
+  }
+
+  body.light-mode .subtitle,
+  body.light-mode .body-text {
+    color: black;
+  }
+
+  .game-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    min-height: 70px;
+    text-decoration: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    flex-wrap: wrap;
+  }
+
+  .game-row span {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    flex: 1;
+  }
+
+  .game-row p {
+    font-size: 1em;
+    color: #000;
+    flex: 2;
+    text-align: right;
+    margin-left: 20px;
+  }
+
+  body:not(.light-mode) .game-row span,
+  body:not(.light-mode) .game-row p {
+    color: white;
+  }
+
+  @media screen and (max-width: 480px) {
+
+    
+    .banner {
+      height: 175px;
+    }
+
+    .banner-content h1 {
+      font-size: 2em;
+    }
+
+    .banner-content p {
+      font-size: 1em;
+    }
+
+    .game-row span {
+      font-size: 1.5em;
+    }
+
+    .game-row p {
+      font-size: 1em;
+    }
+
+    
+
+
+
+    .subtitle {
+      font-size: 2.25em;
+    }
+
+    .body-text {
+      font-size: 1.25em;
+    }
+
+    .banner-logo img {
+      width: 120px;
+      margin-right: 3%;
+    }
+
+    .banner h1 {
+      font-size: 2.5em;
+    }
+
+
+    #factDisplay {
+    font-size: 1.4em;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    transition: background-color 0.3s ease;
+    display: none; 
+  }
+
+
+  }
+
+  @media screen and (min-width: 1024px) {
+    .banner {
+      height: 300px;
+    }
+
+    .banner-content h1 {
+      font-size: 4em;
+    }
+
+    .banner-content p {
+      font-size: 1.5em;
+    }
+
+
+
+    .subtitle {
+      font-size: 3em;
+    }
+
+    .body-text {
+      font-size: 1.5em;
+    }
+
+    .game-row span {
+      font-size: 1.75em;
+    }
+
+    .game-row p {
+      font-size: 1.25em;
+    }
+
+    .games-container{
+      margin-top: 100px;
+      width: 70%;
+    }
+    
+  }
+
+  @media screen and (min-width: 2024px) {
+    .banner {
+      height: 350px;
+    }
+
+    .banner-content h1 {
+      font-size: 5em;
+    }
+
+    .banner-content p {
+      font-size: 2em;
+    }
+
+    .game-row span {
+      font-size: 2.5em;
+    }
+
+    .game-row p {
+      font-size: 1.75em;
+    }
+
+
+
+    .subtitle {
+      font-size: 3.5em;
+    }
+
+    .body-text {
+      font-size: 1.75em;
+    }
+
+    .games-container{
+      margin-top: 100px;
+      width: 50%;
+    }
+    
+  }
+
+  #factButton {
+    background-color: rgb(121, 68, 173);
+    color: white;
+    font-size: 1.25em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0px;
+    transition: background-color 0.3s ease;
+  }
+
+  #factButton:hover {
+    background-color: rgb(98, 53, 137);
+  }
+
+  #factDisplay {
+    font-size: 1.5em;
+    margin-top: 30px;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    transition: background-color 0.3s ease;
+    display: none; 
+  }
+
+  body:not(.light-mode) #factButton {
+    background-color: rgb(90, 90, 90); 
+  }
+
+  body:not(.light-mode) #factButton:hover {
+    background-color: rgb(70, 70, 70); 
+  }
+
+  body:not(.light-mode) #factDisplay {
+    background-color: rgb(90, 90, 90); 
+  }
+
+
+  body.light-mode #factDisplay {
+    background-color: rgb(121, 68, 173); 
+  }
+
+</style>
 </head>
 <body>
 
@@ -16,54 +308,90 @@
     </a>
   </div>
 
-  <!-- Flex container for the links -->
   <div class="navbar-links">
     <a href="learn.html">Learn</a>
     <a href="games.html">Games</a>
     <a href="facts.html" class="active">Facts</a>
   </div>
 
-  <!-- Light/Dark mode toggle button in the navbar -->
   <button class="theme-toggle" id="themeToggle">
     <img id="themeIcon" src="logo/sun-icon.svg" alt="Theme Icon" width="24" height="24">
   </button>
 
-  <!-- Login Icon placed on the rightmost side -->
   <a href="login.html" class="login-icon">
     <img src="logo/login-icon.svg" alt="Login Icon" width="24" height="24">
   </a>
 </div>
 
-<div class="content">
-  <h1>Facts
-  </h1>
+<div class="banner">
+  <div class="banner-content">
+    <h1>Facts</h1>
+    <p>Click the button below to receive a random fact.</p>
+  </div>
 </div>
 
+<div class="games-container">
+  <button id="factButton">Get Random Fact</button>
+  <p id="factDisplay"></p> 
+</div>
+
+
+
 <script>
+
   const themeToggleBtn = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
   const body = document.body;
 
-  // Load theme preference from localStorage or default to light mode if no preference is set
   if (localStorage.getItem('theme') === 'dark') {
-    themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+    body.classList.remove('light-mode');
+    themeIcon.src = 'logo/sun-icon.svg';
   } else {
     body.classList.add('light-mode');
-    themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+    themeIcon.src = 'logo/moon-icon.svg';
   }
 
   themeToggleBtn.addEventListener('click', function () {
     body.classList.toggle('light-mode');
 
     if (body.classList.contains('light-mode')) {
-      themeIcon.src = 'logo/moon-icon.svg'; // Moon icon for dark mode option
+      themeIcon.src = 'logo/moon-icon.svg';
       localStorage.setItem('theme', 'light'); 
     } else {
-      themeIcon.src = 'logo/sun-icon.svg'; // Sun icon for light mode option
+      themeIcon.src = 'logo/sun-icon.svg';
       localStorage.setItem('theme', 'dark'); 
     }
   });
-</script>
+
+  
+  
+  const factButton = document.getElementById('factButton');
+  const factDisplay = document.getElementById('factDisplay');
+  
+  let shownFacts = new Set();
+  
+  factButton.addEventListener('click', function() {
+    if (shownFacts.size === facts.length) {
+      factDisplay.textContent = "I'm all out of interesting facts to tell you :(";
+      factDisplay.style.display = 'block';
+    } else {
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * facts.length);
+      } while (shownFacts.has(randomIndex));  //pick random index from array, if it has been picked skip.
+  
+      const randomFact = facts[randomIndex];
+      factDisplay.textContent = randomFact;
+      factDisplay.style.display = 'block';
+  
+      shownFacts.add(randomIndex);
+    }
+  });
+  
+  </script>
+
+<script src="facts.js"></script> <!-- load at end as was having issues with it loading first and causing flash -->
+  
 
 </body>
 </html>

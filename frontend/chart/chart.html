@@ -31,7 +31,6 @@
         }
 
         applyTheme();
-        // Listen for changes to localStorage and update theme to light or dark
         window.addEventListener("storage", function(event) {
             if (event.key === "theme") {
                 applyTheme();

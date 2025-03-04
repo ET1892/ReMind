@@ -57,17 +57,17 @@ function populateGameTable(games) {
     for (const game in games) {
         const gameData = games[game] || {}; // Ensure gameData exists
         const gameScores = gameData.history || []; // Extract history array
-        const bestScore = gameData.bestScore || "N/A"; // Get bestScore (default to "N/A" if missing)
+        const bestScore = gameData.bestScore || "N/A"; // Get bestScore or NA if not there
         
         // Store both score and timestamp in an array
         const scoresWithTimestamp = gameScores.map(entry => ({
             score: entry.score,
-            timestamp: entry.timestamp // Assuming timestamp is stored as 'timestamp' field
+            timestamp: entry.timestamp
         }));
 
         if (scoresWithTimestamp.length === 0) {
             console.log(`No history found for ${game}, skipping...`);
-            continue; // Skip empty games
+            continue; // Skip empty games 
         }
 
         // Calculate Average Score
@@ -99,7 +99,7 @@ function populateGameTable(games) {
             const scoreValue = score ? score.score : "";
             const timestamp = score ? score.timestamp : "";
 
-            // Add the timestamp to the hover using a tooltip
+            // Add the timestamp to the hover using a tooltip: https://www.geeksforgeeks.org/how-to-add-a-tooltip-to-a-div-using-javascript/
             rowHtml += `<td data-timestamp="${timestamp}" class="score-cell">${scoreValue}</td>`;
         }
 

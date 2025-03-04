@@ -25,7 +25,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
-    font-size: 30px; /* Increased overall font size */
+    font-size: 30px; 
   }
 
   #timer {
@@ -178,7 +178,7 @@
         // API call to save the score
         const userId = localStorage.getItem("uid"); // Get UID from local storage
         const gameName = "minesweeper"; // Set game name
-        const lowerIsBetter = true; // Lower score (time) is better
+        const lowerIsBetter = true; // Lower score is better set to true
 
         // Ensure userId exists before making the request
         if (!userId) {

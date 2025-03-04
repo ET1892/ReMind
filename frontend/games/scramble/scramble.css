@@ -141,12 +141,11 @@
   
   
   
-  /* Modify the modal CSS to position it above the container */
   .modal {
     display: none;
-    position: absolute;  /* Change from fixed to absolute */
+    position: absolute;  
     z-index: -1;
-    top: 5%; /* Default position */
+    top: 5%; 
     left: 0;
     width: 100%;
     height: 100%;
