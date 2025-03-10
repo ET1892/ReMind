@@ -146,7 +146,7 @@ app.get("/get-user-data", async (req, res) => {
 
 
 
-//Start the Server
+//Start the local server on 3001
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
