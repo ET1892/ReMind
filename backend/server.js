@@ -16,6 +16,7 @@ admin.initializeApp({
   }),
 });
 
+//use cors and expressJS for middleware routing  
 const db = admin.firestore();
 const app = express();
 app.use(cors());
@@ -33,7 +34,7 @@ app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const userRecord = await admin.auth().createUser({ //Ensures email and password
+    const userRecord = await admin.auth().createUser({ //Ensures email and password in request
       email,
       password,
     });
@@ -51,32 +52,32 @@ app.post("/signup", async (req, res) => {
       },
     });
 
-    res.status(201).json({ message: "User created", uid: userRecord.uid });
+    res.status(201).json({ message: "User created", uid: userRecord.uid }); //success feedback 201
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message }); //error message if didnt work
   }
 });
 
 
-
+//Update Score API
 app.post("/update-score", async (req, res) => 
   {
   console.log("Received Headers:", req.headers);
   console.log("Received Data Type:", typeof req.body);
   console.log("Received Data:", req.body);
 
-  if (!req.body || Object.keys(req.body).length === 0) {
+  if (!req.body || Object.keys(req.body).length === 0) { //if empty give 400 error
     return res.status(400).json({ error: "Request body is empty or not parsed correctly" });
   }
 
-  const { uid, game, score, lowerIsBetter } = req.body;
+  const { uid, game, score, lowerIsBetter } = req.body; //Looking for these param, lowerIsBetter for timed games where the lower score is better
 
   if (!uid || !game || typeof score !== "number" || typeof lowerIsBetter !== "boolean") {
-    return res.status(400).json({ error: "Invalid input" });
+    return res.status(400).json({ error: "Invalid input" }); //if not as on left will feedabck invalid input
   }
 
   try {
-    const userRef = db.collection("users").doc(uid);
+    const userRef = db.collection("users").doc(uid); //try the user for the UID in local storage, if not there will give user not found error
     const userDoc = await userRef.get();
 
     if (!userDoc.exists) {
@@ -86,6 +87,7 @@ app.post("/update-score", async (req, res) =>
     let userData = userDoc.data();
     let gameData = userData.games?.[game] || { bestScore: null, history: [] };
 
+    //posts the local time in the game history array also
     const now = new Date();
     const timestamp = now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + now.toLocaleDateString("en-GB");
 
@@ -105,7 +107,7 @@ app.post("/update-score", async (req, res) =>
     }
     
 
-    // Update Firestore
+    // Update db
     await userRef.update({
       [`games.${game}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
       [`games.${game}.bestScore`]: newBestScore,
