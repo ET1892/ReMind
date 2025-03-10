@@ -107,7 +107,7 @@ app.post("/update-score", async (req, res) =>
     }
     
 
-    // Update db
+    // Update db changes/additions
     await userRef.update({
       [`games.${game}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
       [`games.${game}.bestScore`]: newBestScore,
@@ -121,8 +121,10 @@ app.post("/update-score", async (req, res) =>
 
 
 
-
-//Fetch User Data API when signing in
+//FireBase themselves suggested to use client side login as quicker and more safe, leaving a signature vs if pushed to backend maliciously 
+//This way easier for FireBase and dev asmy backend only needs to verify tokens rather than handling data myself
+/*
+Fetch User Data API when signing in
 app.get("/get-user-data", async (req, res) => {
   const { uid } = req.query;
 
@@ -143,6 +145,7 @@ app.get("/get-user-data", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+*/
 
 
 
