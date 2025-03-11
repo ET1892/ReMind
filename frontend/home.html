@@ -366,21 +366,27 @@ body.light-mode .body-text {
   
 
 <script>
+  //theme toggle button and theme icon elements
   const themeToggleBtn = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
   const body = document.body;
 
+
+  //check local storage for saved preference
   if (localStorage.getItem('theme') === 'dark') {
     body.classList.remove('light-mode');
     themeIcon.src = 'logo/sun-icon.svg';
-  } else {
+  }else {
     body.classList.add('light-mode');
     themeIcon.src = 'logo/moon-icon.svg';
   }
 
+  //event listener for listening to click to change theme
   themeToggleBtn.addEventListener('click', function () {
+    //toggle light mode in css
     body.classList.toggle('light-mode');
 
+    //update to other icon after click + store in local storage
     if (body.classList.contains('light-mode')) {
       themeIcon.src = 'logo/moon-icon.svg';
       localStorage.setItem('theme', 'light'); 
