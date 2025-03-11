@@ -44,7 +44,7 @@ app.post("/signup", async (req, res) => {
     await db.collection("users").doc(userRecord.uid).set({
       email,
       games: {
-        minesweeper: { bestScore: null, history: [] }, //changed from 0 to null, as nothing was lower than 0 so just leave it empty on a new account
+        minesweeper: { bestScore: null, history: [] }, 
         scramble: { bestScore: null, history: [] },
         sudoku: { bestScore: null, history: [] },
         recall: { bestScore: null, history: [] },
@@ -106,7 +106,6 @@ app.post("/update-score", async (req, res) =>
       newBestScore = Math.max(newBestScore, score);
     }
     
-
     // Update db changes/additions
     await userRef.update({
       [`games.${game}.history`]: admin.firestore.FieldValue.arrayUnion(historyEntry),
