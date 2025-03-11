@@ -52,20 +52,20 @@
 
     // Load theme preference from localStorage or default to light mode if no preference is set
     if (localStorage.getItem('theme') === 'dark') {
-      themeIcon.src = '../../logo/sun-icon.svg'; // Sun icon for light mode option
+      themeIcon.src = '../../logo/sun-icon.svg'; 
     } else {
       body.classList.add('light-mode');
-      themeIcon.src = '../../logo/moon-icon.svg'; // Moon icon for dark mode option
+      themeIcon.src = '../../logo/moon-icon.svg'; 
     }
 
     themeToggleBtn.addEventListener('click', function () {
       body.classList.toggle('light-mode');
 
       if (body.classList.contains('light-mode')) {
-        themeIcon.src = '../../logo/moon-icon.svg'; // Moon icon for dark mode option
+        themeIcon.src = '../../logo/moon-icon.svg'; 
         localStorage.setItem('theme', 'light'); 
       } else {
-        themeIcon.src = '../../logo/sun-icon.svg'; // Sun icon for light mode option
+        themeIcon.src = '../../logo/sun-icon.svg'; 
         localStorage.setItem('theme', 'dark'); 
       }
     });
