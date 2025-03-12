@@ -3,6 +3,7 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+const helmet = require("helmet");
 
 dotenv.config(); // Load environment variables
 
@@ -22,6 +23,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Apply Helmet with security settings - gotten from Helmet docs - https://helmetjs.github.io
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disable CSP to avoid issues with APIs
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin requests
+    frameguard: { action: "deny" }, // Prevent clickjacking
+    referrerPolicy: { policy: "no-referrer" }, // Hide referrer info for security
+  })
+);
+
+
+// Prevent Helmet from interfering with API responses
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  next();
+});
 
 
 //Health Check
