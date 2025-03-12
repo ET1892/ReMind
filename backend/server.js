@@ -25,15 +25,34 @@ app.use(cors());
 app.use(express.json());
 
 //Enable CSP for security headers to pass content security policy test as seen on - https://securityheaders.com/?q=https%3A%2F%2Ffyp-60ev.onrender.com&followRedirects=on
+//had to allow firebase and its proxys as wasnt happy I had them cut out 
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://trusted-cdn.com"],
-        styleSrc: ["'self'", "https://fonts.googleapis.com"],
-        imgSrc: ["'self'", "data:", "https://trusted-images.com"],
-        connectSrc: ["'self'", "https://firestore.googleapis.com", "https://api.trusted-service.com"], // Added Firestore as firestore complaining by email about CORS
+        scriptSrc: [
+          "'self'",
+          "https://trusted-cdn.com",
+          "https://www.gstatic.com",
+          "https://www.googleapis.com",
+        ],
+        styleSrc: [
+          "'self'",
+          "https://fonts.googleapis.com",
+          "https://fonts.gstatic.com",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https://trusted-images.com",
+          "https://www.gstatic.com",
+        ],
+        connectSrc: [
+          "'self'",
+          "https://firestore.googleapis.com",
+          "https://api.trusted-service.com",
+        ],
         frameAncestors: ["'none'"],
       },
     },
@@ -42,6 +61,7 @@ app.use(
     referrerPolicy: { policy: "no-referrer" },
   })
 );
+
 
 
 
@@ -67,11 +87,12 @@ const apiLimiter = rateLimit({
 
 //set limiter gloablly rather than the 2 API's of the website, because just in case - except firestore as was giving out about it 
 app.use((req, res, next) => {
-  if (req.path.startsWith("/firestore")) { //if its /firestore, allow it through 
-    return next(); //next() allows through otherwise no for rate limiting
+  if (req.headers.origin?.includes("firestore.googleapis.com")) { //if its a firebase google api 
+    return next(); //next() will let it through the limiter
   }
   apiLimiter(req, res, next);
 });
+
 
 
 
