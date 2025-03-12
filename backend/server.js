@@ -9,7 +9,7 @@ const rateLimit = require("express-rate-limit");
 dotenv.config(); // Load environment variables
 
 
-// Initialize Firebase Admin SDK from env
+// Initialize Firebase Admin SDK from env - from firebase docs
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -24,24 +24,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
-
-// Apply Helmet with security settings - gotten from Helmet docs - https://helmetjs.github.io
+//Enable CSP for security headers to pass content security policy test as seen on - https://securityheaders.com/?q=https%3A%2F%2Ffyp-60ev.onrender.com&followRedirects=on
 app.use(
   helmet({
-    contentSecurityPolicy: false, // Disable CSP to avoid issues with APIs
-    crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow cross-origin requests
-    frameguard: { action: "deny" }, // Prevent clickjacking
-    referrerPolicy: { policy: "no-referrer" }, // Hide referrer info for security
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://trusted-cdn.com"],
+        styleSrc: ["'self'", "https://fonts.googleapis.com"],
+        imgSrc: ["'self'", "data:", "https://trusted-images.com"],
+        connectSrc: ["'self'", "https://api.trusted-service.com"],
+        frameAncestors: ["'none'"],
+      },
+    },
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    frameguard: { action: "deny" },
+    referrerPolicy: { policy: "no-referrer" },
+    permissionsPolicy: {
+      // Set feature restrictions instead of manually setting in headers
+      features: {
+        geolocation: ["self"],
+        microphone: [],
+        camera: [],
+        fullscreen: ["self"],
+      },
+    },
   })
 );
-
-
-// Prevent Helmet from interfering with API responses - set to nosniff
-app.use((req, res, next) => {
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  next();
-});
 
 
 // Rate limiting middleware to prevent API abuse
@@ -51,6 +60,9 @@ const apiLimiter = rateLimit({
   message: { error: "Too many requests, please try again after 15 minutes" },
   headers: true, // Send rate limit headers to clients
 });
+
+//set limiter gloablly rather than the 2 API's of the website, because just in case and security
+app.use(apiLimiter);
 
 
 
