@@ -4,6 +4,7 @@ const admin = require("firebase-admin");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 dotenv.config(); // Load environment variables
 
@@ -23,6 +24,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+
 // Apply Helmet with security settings - gotten from Helmet docs - https://helmetjs.github.io
 app.use(
   helmet({
@@ -34,11 +37,24 @@ app.use(
 );
 
 
-// Prevent Helmet from interfering with API responses
+// Prevent Helmet from interfering with API responses - set to nosniff
 app.use((req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   next();
 });
+
+
+// Rate limiting middleware to prevent API abuse
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes window for 100 posts seems good
+  max: 100, // Limit each IP to 100 requests per window
+  message: { error: "Too many requests, please try again after 15 minutes" },
+  headers: true, // Send rate limit headers to clients
+});
+
+//set limiter gloablly rather than the 2 API's of the website, because just in case and security
+app.use(apiLimiter);
+
 
 
 //Health Check
