@@ -40,17 +40,20 @@ app.use(
     crossOriginResourcePolicy: { policy: "cross-origin" },
     frameguard: { action: "deny" },
     referrerPolicy: { policy: "no-referrer" },
-    permissionsPolicy: {
-      // Set feature restrictions instead of manually setting in headers
-      features: {
-        geolocation: ["self"],
-        microphone: [],
-        camera: [],
-        fullscreen: ["self"],
-      },
-    },
   })
 );
+
+
+
+// Permission policy seperate to helmet as only supports the old feature policy
+app.use((req, res, next) => {
+  res.setHeader(
+    "Permissions-Policy",
+    "geolocation=(self), microphone=(), camera=(), fullscreen=(self)"
+  );
+  next();
+});
+
 
 
 // Rate limiting middleware to prevent API abuse
@@ -61,7 +64,7 @@ const apiLimiter = rateLimit({
   headers: true, // Send rate limit headers to clients
 });
 
-//set limiter gloablly rather than the 2 API's of the website, because just in case and security
+//set limiter gloablly rather than the 2 API's of the website, because just in case
 app.use(apiLimiter);
 
 
