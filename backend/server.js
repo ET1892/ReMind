@@ -21,7 +21,13 @@ admin.initializeApp({
 //use cors and expressJS for middleware routing  
 const db = admin.firestore();
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://remind.lat"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
 
 //Enable CSP for security headers to pass content security policy test as seen on - https://securityheaders.com/?q=https%3A%2F%2Ffyp-60ev.onrender.com&followRedirects=on
@@ -52,6 +58,8 @@ app.use(
           "'self'",
           "https://firestore.googleapis.com",
           "https://api.trusted-service.com",
+          "https://identitytoolkit.googleapis.com",
+          "https://securetoken.googleapis.com",
         ],
         frameAncestors: ["'none'"],
       },
@@ -85,16 +93,16 @@ const apiLimiter = rateLimit({
   headers: true, // Send rate limit headers to clients
 });
 
-//set limiter gloablly rather than the 2 API's of the website, because just in case - except firestore as was giving out about it 
+//again from firebase to allow their api - set limiter gloablly rather than the 2 API's of the website, because just in case - except firestore as was giving out about it 
 app.use((req, res, next) => {
-  if (req.headers.origin?.includes("firestore.googleapis.com")) { //if its a firebase google api 
-    return next(); //next() will let it through the limiter
+  const allowedHosts = ["firestore.googleapis.com", "securetoken.googleapis.com", "identitytoolkit.googleapis.com"];
+  
+  if (allowedHosts.some((host) => req.hostname.includes(host))) {
+    return next(); // Allow Firebase APIs through the rate limiter
   }
+
   apiLimiter(req, res, next);
 });
-
-
-
 
 
 
