@@ -52,8 +52,6 @@ const apiLimiter = rateLimit({
   headers: true, // Send rate limit headers to clients
 });
 
-//set limiter gloablly rather than the 2 API's of the website, because just in case and security
-app.use(apiLimiter);
 
 
 
