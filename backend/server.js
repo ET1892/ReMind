@@ -25,7 +25,7 @@ app.use(
   cors({
     origin: ["https://remind.lat"],
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 app.use(express.json());
@@ -95,14 +95,19 @@ const apiLimiter = rateLimit({
 
 //again from firebase to allow their api - set limiter gloablly rather than the 2 API's of the website, because just in case - except firestore as was giving out about it 
 app.use((req, res, next) => {
-  const allowedHosts = ["firestore.googleapis.com", "securetoken.googleapis.com", "identitytoolkit.googleapis.com"];
-  
-  if (allowedHosts.some((host) => req.hostname.includes(host))) {
-    return next(); // Allow Firebase APIs through the rate limiter
+  const allowedHosts = [
+    "firestore.googleapis.com",
+    "securetoken.googleapis.com",
+    "identitytoolkit.googleapis.com",
+  ];
+
+  if (allowedHosts.some((host) => req.originalUrl.includes(host))) { //allows hosts through the rate limiter
+    return next(); // returns firebase through the limiter regardless if hit or not globally 
   }
 
   apiLimiter(req, res, next);
 });
+
 
 
 
