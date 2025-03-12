@@ -25,7 +25,7 @@ app.use(
   cors({
     origin: ["https://remind.lat"],
     methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
   })
 );
 app.use(express.json());
@@ -101,7 +101,7 @@ app.use((req, res, next) => {
     "identitytoolkit.googleapis.com",
   ];
 
-  if (allowedHosts.some((host) => req.originalUrl.includes(host))) { //allows hosts through the rate limiter
+  if (allowedHosts.some((host) => req.headers.host?.includes(host))) { //allows hosts through the rate limiter
     return next(); // returns firebase through the limiter regardless if hit or not globally 
   }
 
