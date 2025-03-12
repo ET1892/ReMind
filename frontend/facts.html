@@ -377,8 +377,11 @@
       factDisplay.textContent = "I'm all out of interesting facts to tell you :(";
       factDisplay.style.display = 'block';
     } else {
+
+      
       let randomIndex;
-      do {
+      do 
+      {
         randomIndex = Math.floor(Math.random() * facts.length);
       } while (shownFacts.has(randomIndex));  //pick random index from array, if it has been picked skip.
   

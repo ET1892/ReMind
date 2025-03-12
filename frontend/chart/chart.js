@@ -18,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+
 // FUNCTION TO LOAD USER'S GAME DATA FROM FIREBASE 
 async function loadUserGameData() {
     onAuthStateChanged(auth, async (user) => {
