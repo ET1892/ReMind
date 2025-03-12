@@ -33,7 +33,7 @@ app.use(
         scriptSrc: ["'self'", "https://trusted-cdn.com"],
         styleSrc: ["'self'", "https://fonts.googleapis.com"],
         imgSrc: ["'self'", "data:", "https://trusted-images.com"],
-        connectSrc: ["'self'", "https://api.trusted-service.com"],
+        connectSrc: ["'self'", "https://firestore.googleapis.com", "https://api.trusted-service.com"], // Added Firestore as firestore complaining by email about CORS
         frameAncestors: ["'none'"],
       },
     },
@@ -42,6 +42,7 @@ app.use(
     referrerPolicy: { policy: "no-referrer" },
   })
 );
+
 
 
 
@@ -64,8 +65,14 @@ const apiLimiter = rateLimit({
   headers: true, // Send rate limit headers to clients
 });
 
-//set limiter gloablly rather than the 2 API's of the website, because just in case
-app.use(apiLimiter);
+//set limiter gloablly rather than the 2 API's of the website, because just in case - except firestore as was giving out about it 
+app.use((req, res, next) => {
+  if (req.path.startsWith("/firestore")) { //if its /firestore, allow it through 
+    return next(); //next() allows through otherwise no for rate limiting
+  }
+  apiLimiter(req, res, next);
+});
+
 
 
 
