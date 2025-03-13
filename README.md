@@ -15,7 +15,7 @@ Backend
 The backend is built using Node.js.
 Please use the below set of commands to run.
 
-cd backend
+cd backend,
 npm install
 
 ------
