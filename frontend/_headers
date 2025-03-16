@@ -5,4 +5,3 @@ X-Frame-Options: DENY
 X-Content-Type-Options: nosniff
 Referrer-Policy: no-referrer-when-downgrade
 Permissions-Policy: interest-cohort=()
-*/
