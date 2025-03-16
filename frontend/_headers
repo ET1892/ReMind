@@ -1,0 +1,6 @@
+/*
+Content-Security-Policy: default-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://fyp-60ev.onrender.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; frame-src 'self' https://remind.lat; connect-src 'self' https://fyp-60ev.onrender.com;
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Referrer-Policy: no-referrer-when-downgrade
+Permissions-Policy: geolocation=(), microphone=(), camera=()
