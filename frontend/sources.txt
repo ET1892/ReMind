@@ -1,21 +1,51 @@
-Boot, W. R., Champion, M., Blakely, D. P., Wright, T., Souders, D. J., & Charness, N. (2013). Video
-Games as a Means to Reduce Age-Related Cognitive Decline: Attitudes, Compliance, and Effectiveness.
-Frontiers in Psychology, 4. https://doi.org/10.3389/fpsyg.2013.00031
+Boot, W. R., Champion, M., Blakely, D. P., Wright, T., Souders, D. J., & Charness, N. (2013). Video Games as a Means to Reduce Age-Related Cognitive Decline: Attitudes, Compliance, and Effectiveness. Frontiers in Psychology, 4. https://doi.org/10.3389/fpsyg.2013.00031
 
-Ferreira, N., Owen, A., Mohan, A., Corbett, A., & Ballard, C. (2015). Associations between cognitively
-stimulating leisure activities, cognitive function and age-related cognitive decline. International Journal
-of Geriatric Psychiatry, 30(4). https://doi.org/10.1002/gps.4155
+Ferreira, N., Owen, A., Mohan, A., Corbett, A., & Ballard, C. (2015). Associations between cognitively stimulating leisure activities, cognitive function and age-related cognitive decline. International Journal of Geriatric Psychiatry, 30(4). https://doi.org/10.1002/gps.4155
 
-Kappil, S. R., & Sathiyaseelan, A. (2015). Tetris: A Next Generation Stressbuster. The International
-Journal, 5(3).
+Kappil, S. R., & Sathiyaseelan, A. (2015). Tetris: A Next Generation Stressbuster. The International Journal, 5(3).
 
-Reynaldo, C., Christian, R., Hosea, H., & Gunawan, A. A. S. (2021). Using Video Games to Improve
-Capabilities in Decision Making and Cognitive Skill: A Literature Review. Procedia Computer Science,
-179. https://doi.org/10.1016/j.procs.2020.12.027
+Reynaldo, C., Christian, R., Hosea, H., & Gunawan, A. A. S. (2021). Using Video Games to Improve Capabilities in Decision Making and Cognitive Skill: A Literature Review. Procedia Computer Science, 179. https://doi.org/10.1016/j.procs.2020.12.027
 
-Risqi Ekanti Ayuningtyas Palupi, Andhina Ika Sunardi, & Dwi Cahyono. (2024). Examining the
-Students’ Vocabularies Improvement by Using Scramble Card. TLEMC (Teaching and Learning English
-in Multicultural Contexts), 8(1), 59–67. https://doi.org/10.37058/tlemc.v8i1.11427
+Risqi Ekanti Ayuningtyas Palupi, Andhina Ika Sunardi, & Dwi Cahyono. (2024). Examining the Students’ Vocabularies Improvement by Using Scramble Card. TLEMC (Teaching and Learning English in Multicultural Contexts), 8(1), 59–67. https://doi.org/10.37058/tlemc.v8i1.11427
 
-Walker, J. J. (2012). Minesweeper and Hypothetical Thinking Action Research & Pilot Study. SSRN
-Electronic Journal. https://doi.org/10.2139/ssrn.2168017
+Walker, J. J. (2012). Minesweeper and Hypothetical Thinking Action Research & Pilot Study. SSRN Electronic Journal. https://doi.org/10.2139/ssrn.2168017
+
+McDermott, K. B. (n.d.). Memory (Encoding, Storage, Retrieval). Noba Project. https://nobaproject.com/modules/memory-encoding-storage-retrieval
+
+McLeod, S. (2013). Memory Retrieval. Simply Psychology. https://www.simplypsychology.org/memory.html
+
+Cowan, N. (2008). What are the differences between long-term, short-term, and working memory? National Center for Biotechnology Information. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2657600/
+
+Verywell Health. (2022). 4 Types of Memory: Sensory, Short-Term, Working & Long-Term. https://www.verywellhealth.com/types-of-memory-explained-98552
+
+Hambrick, D. Z., & Engle, R. W. (2003). The Role of Working Memory in Problem Solving. Georgia Institute of Technology. https://englelab.gatech.edu/articles/2003/the-role-of-working-memory-in-problem-solving.pdf
+
+ScienceDirect. (n.d.). How Working Memory Capacity Affects Problem Solving. https://www.sciencedirect.com/science/article/pii/B9780123943934000066
+
+Ullman, M. T. (2001). A neurocognitive perspective on language: The declarative/procedural model. Nature Reviews Neuroscience, 2(10), 717–726.
+
+Frontiers in Psychology. (2018). Procedural-Memory, Working-Memory, and Declarative-Memory Skills and the Learning of Sound Categories. https://www.frontiersin.org/articles/10.3389/fpsyg.2018.01828/full
+
+Eichenbaum, H. (2017). The role of the hippocampus in navigation is memory. Journal of Neurophysiology, 117(4), 1785–1796.
+
+Fanselow, M. S., & Dong, H. W. (2010). Are the dorsal and ventral hippocampus functionally distinct structures? Neuron, 65(1), 7–19.
+
+McLeod, S. (2015). Theories of Forgetting in Psychology. Simply Psychology. https://www.simplypsychology.org/forgetting.html
+
+ScienceDirect. (2021). Failures of memory and the fate of forgotten memories. https://www.sciencedirect.com/science/article/abs/pii/S1074742721000484
+
+Diekelmann, S., & Born, J. (2010). The memory function of sleep. Nature Reviews Neuroscience, 11(2), 114–126.
+
+Yale School of Medicine. (2022). Sleep's Crucial Role in Preserving Memory. https://medicine.yale.edu/news-article/sleeps-crucial-role-in-preserving-memory/
+
+National Institutes of Health. (2022). Video gaming may be associated with better cognitive performance in children. https://www.nih.gov/news-events/news-releases/video-gaming-may-be-associated-better-cognitive-performance-children
+
+MDPI. (2022). The Benefits of Video Games on Brain Cognitive Function. https://www.mdpi.com/2076-3417/12/11/5561
+
+Alzheimer's Society. (n.d.). Memory loss and dementia. https://www.alzheimers.org.uk/about-dementia/symptoms-and-diagnosis/symptoms/memory-loss
+
+World Health Organization. (2024). Dementia. https://www.who.int/news-room/fact-sheets/detail/dementia
+
+Neuroscience News. (2024). AI Unlocks Secrets of Human Imagination and Memory Formation. https://neurosciencenews.com/ai-imagination-memory-25498/
+
+Financial Times. (2025). AI groups invest in building memory capabilities. https://www.ft.com/content/9b774507-2d27-4cfe-9b32-f000ac4e7598
