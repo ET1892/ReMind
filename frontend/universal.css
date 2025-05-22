@@ -3,7 +3,6 @@ body {
   color: white;
   margin: 0;
   font-family: Arial, sans-serif;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 body.light-mode {
@@ -53,7 +52,6 @@ body.light-mode .navbar {
   text-align: center;
   padding: 1% 2.5%;
   text-decoration: none;
-  transition: transform 0.2s;
   font-size: 1.2em;
 }
 

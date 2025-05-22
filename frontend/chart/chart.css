@@ -3,7 +3,6 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    transition: background-color 0.5s, color 0.5s; 
 }
 
 
@@ -87,7 +86,6 @@ body:not(.light-mode) tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: rgba(161, 161, 161, 0.4);
-    transition: 0.5s;
 }
 
 body:not(.light-mode) tbody tr:hover {
